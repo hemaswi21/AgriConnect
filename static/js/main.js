@@ -1,34 +1,110 @@
-// AgriConnect Core Client Logic & Bilingual Support
+// AgriConnect Core Client Logic & 100% Pure Bilingual Support
 let currentLang = localStorage.getItem("agri_lang") || "te";
 
 const translations = {
     "te": {
-        "nav_home": "హోమ్ (Home)",
-        "nav_crop": "పంట సిఫార్సు (Crop)",
-        "nav_disease": "తెగుళ్ల గుర్తింపు (Disease)",
-        "nav_weather": "వాతావరణం (Weather)",
-        "nav_market": "మార్కెట్ ధరలు (Mandi)",
-        "nav_fertilizer": "ఎరువులు (Fertilizer)",
+        // Navbar
+        "nav_home": "హోమ్",
+        "nav_crop": "పంట సిఫార్సు",
+        "nav_disease": "తెగుళ్ల గుర్తింపు",
+        "nav_weather": "వాతావరణం",
+        "nav_market": "మార్కెట్ ధరలు",
+        "nav_fertilizer": "ఎరువుల సూచన",
+        "btn_switch_lang": "Switch to English",
+
+        // Hero
         "hero_title": "AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ",
         "hero_sub": "నేల స్వభావం ఆధారంగా పంటల సిఫార్సు, ఆకు తెగుళ్ల గుర్తింపు, లైవ్ మార్కెట్ ధరలు మరియు వ్యవసాయ వాతావరణ హెచ్చరికలు ఒకే చోట.",
-        "btn_switch_lang": "Switch to English",
-        "btn_predict": "విశ్లేషించండి (Predict)",
-        "btn_diagnose": "తెగులును గుర్తించండి (Diagnose)",
-        "btn_calculate": "ఎరువులను లెక్కించండి (Calculate)"
+        "stat_crops": "పంటల సపోర్ట్",
+        "stat_accuracy": "మోడల్ ఖచ్చితత్వం",
+        "stat_diseases": "ఆకు తెగుళ్లు",
+        "stat_mandi": "లైవ్ మార్కెట్ ధరలు",
+
+        // Cards Grid
+        "card1_title": "పంట సిఫార్సు",
+        "card1_desc": "నేలలోని నత్రజని, భాస్వరం, పొటాషియం (N-P-K), pH, ఉష్ణోగ్రత మరియు వర్షపాతం ఆధారంగా అత్యధిక దిగుబడినిచ్చే పంటను మెషిన్ లెర్నింగ్ మోడల్స్ సిఫార్సు చేస్తాయి.",
+        "card1_link": "నేలను విశ్లేషించి పంటను తెలుసుకోండి →",
+
+        "card2_title": "మొక్కల తెగుళ్ల గుర్తింపు",
+        "card2_desc": "తెగులు సోకిన ఆకు ఫోటోను అప్‌లోడ్ చేయండి. డీప్ లెర్నింగ్ CNN మోడల్ తెగులును గుర్తించి, సేంద్రీయ మరియు రసాయన నివారణ మందులను వెంటనే సూచిస్తుంది.",
+        "card2_link": "ఆకు ఫోటోను స్కాన్ చేయండి →",
+
+        "card3_title": "వాతావరణం & వ్యవసాయ హెచ్చరికలు",
+        "card3_desc": "నిజ సమయ వ్యవసాయ-వాతావరణ సూచనలు. వర్షపాతం, ఎండ తీవ్రత మరియు పురుగుమందులు పిచికారీ చేయడానికి సరైన సమయాలపై తక్షణ హెచ్చరికలు.",
+        "card3_link": "వాతావరణ సమాచారాన్ని చూడండి →",
+
+        "card4_title": "మార్కెట్ ధరల సమాచారం (మండి)",
+        "card4_desc": "తెలంగాణ, ఆంధ్రప్రదేశ్ మరియు భారతదేశంలోని ప్రధాన వ్యవసాయ మార్కెట్ల ప్రస్తుత ధరలు (కనీస, గరిష్ట, సగటు ధరలు ₹/క్వింటాల్).",
+        "card4_link": "మార్కెట్ ధరలను ట్రాక్ చేయండి →",
+
+        "card5_title": "ఎరువుల మోతాదు కాలిక్యులేటర్",
+        "card5_desc": "నేల పరీక్ష ఫలితాలు మరియు పంట అవసరాల ఆధారంగా ఎకరాకు కావలసిన యూరియా, డీఏపీ (DAP), పొటాష్ బస్తాల సంఖ్యను ఖచ్చితంగా లెక్కిస్తుంది.",
+        "card5_link": "ఎరువుల మోతాదును లెక్కించండి →",
+
+        "card6_title": "తెలుగు సహాయం & స్మార్ట్ అసిస్టెంట్",
+        "card6_desc": "రైతులకు ఉపయోగపడే స్మార్ట్ అసిస్టెంట్. వ్యవసాయ సలహాలు పొందడానికి, వాయిస్ అసిస్టెంట్ వినడానికి లేదా భాషను మార్చుకోవడానికి ఇక్కడ క్లిక్ చేయండి.",
+        "card6_link": "స్మార్ట్ అసిస్టెంట్‌ని తెరవండి →",
+
+        // Buttons
+        "btn_predict": "పంటను సిఫార్సు చేయండి",
+        "btn_diagnose": "తెగులును గుర్తించండి",
+        "btn_calculate": "ఎరువుల మోతాదును లెక్కించండి",
+
+        // Footer
+        "footer_rights": "© 2026 AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ. సర్వహక్కులు ప్రత్యేకించబడ్డాయి.",
+        "footer_sub": "రైతుల కోసం రూపొందించబడింది • మెషిన్ లెర్నింగ్ & డీప్ లెర్నింగ్ ఆధారితం"
     },
     "en": {
+        // Navbar
         "nav_home": "Home",
         "nav_crop": "Crop Recommendation",
         "nav_disease": "Disease Detection",
-        "nav_weather": "Weather & Alerts",
+        "nav_weather": "Weather Alerts",
         "nav_market": "Market Prices",
         "nav_fertilizer": "Fertilizer Calculator",
+        "btn_switch_lang": "తెలుగులోకి మార్చండి",
+
+        // Hero
         "hero_title": "AgriConnect: AI-Based Agriculture Support System",
         "hero_sub": "Smart crop recommendation, instant plant disease detection, live mandi prices, and agro-weather advisories in one unified platform.",
-        "btn_switch_lang": "తెలుగులోకి మార్చండి",
+        "stat_crops": "Crops Supported",
+        "stat_accuracy": "Model Accuracy",
+        "stat_diseases": "Plant Diseases",
+        "stat_mandi": "Live Mandi Rates",
+
+        // Cards Grid
+        "card1_title": "Crop Recommendation",
+        "card1_desc": "Machine Learning models (Random Forest & Naive Bayes) analyze Soil N-P-K, pH, temperature, and rainfall to recommend the highest yielding crop.",
+        "card1_link": "Analyze Soil & Recommend Crop →",
+
+        "card2_title": "Plant Disease Detection",
+        "card2_desc": "Upload a smartphone photo of any diseased leaf. Deep Learning CNN model instantly diagnoses the disease with organic & chemical treatment remedies.",
+        "card2_link": "Scan Plant Leaf →",
+
+        "card3_title": "Weather & Agro-Advisories",
+        "card3_desc": "Live agro-meteorological advisories. Instant alerts for rainfall, frost, heat waves, and best time windows for spraying pesticides and fertilizers.",
+        "card3_link": "Check Weather & Alerts →",
+
+        "card4_title": "Mandi Market Prices",
+        "card4_desc": "Daily updated APMC Mandi rates across Telangana, Andhra Pradesh, and India. Check Min, Max, and Modal prices with daily price trends.",
+        "card4_link": "Track Mandi Rates →",
+
+        "card5_title": "Fertilizer Calculator",
+        "card5_desc": "Calculate exact commercial fertilizer requirements (Urea, DAP, MOP bags per acre) based on soil test deficits and target crop nutrition needs.",
+        "card5_link": "Calculate Fertilizer Dosage →",
+
+        "card6_title": "Telugu Support & Smart Assist",
+        "card6_desc": "Bilingual Farmer AI Assistant. Click to ask agriculture questions, listen to Telugu voice guidance, or toggle language.",
+        "card6_link": "Open Smart Assist →",
+
+        // Buttons
         "btn_predict": "Recommend Crop",
         "btn_diagnose": "Scan & Diagnose",
-        "btn_calculate": "Calculate Dosage"
+        "btn_calculate": "Calculate Dosage",
+
+        // Footer
+        "footer_rights": "© 2026 AgriConnect: AI-Based Agriculture Support System. All Rights Reserved.",
+        "footer_sub": "Designed for Farmers • Machine Learning & Deep Learning Powered"
     }
 };
 
@@ -98,9 +174,10 @@ async function submitCropForm(e) {
         });
         const data = await res.json();
         
-        document.getElementById("resCropName").textContent = `${data.crop} - ${data.telugu}`;
+        const cropDisplay = currentLang === "te" ? data.telugu : data.crop;
+        document.getElementById("resCropName").textContent = cropDisplay;
         document.getElementById("resCropIcon").textContent = data.icon;
-        document.getElementById("resConfidence").textContent = `Accuracy: ${data.confidence}%`;
+        document.getElementById("resConfidence").textContent = currentLang === "te" ? `ఖచ్చితత్వం: ${data.confidence}%` : `Accuracy: ${data.confidence}%`;
         document.getElementById("resSeason").textContent = data.season;
         document.getElementById("resWater").textContent = data.water_req;
         document.getElementById("resSoil").textContent = data.soil_type;
@@ -111,14 +188,14 @@ async function submitCropForm(e) {
             const badge = document.createElement("span");
             badge.className = "badge badge-info";
             badge.style.marginRight = "6px";
-            badge.textContent = `${alt.icon} ${alt.crop} (${alt.telugu})`;
+            badge.textContent = `${alt.icon} ${currentLang === "te" ? alt.telugu : alt.crop}`;
             altContainer.appendChild(badge);
         });
 
         resultBox.classList.add("active");
         resultBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
     } catch (err) {
-        alert("Prediction failed. Please check inputs.");
+        alert(currentLang === "te" ? "విశ్లేషణ విఫలమైంది. దయచేసి వివరాలను సరిచూసుకోండి." : "Prediction failed. Please check inputs.");
     } finally {
         btn.disabled = false;
         btn.innerHTML = "🌱 " + (translations[currentLang]["btn_predict"]);
@@ -149,8 +226,8 @@ async function submitDiseaseScan(e) {
         });
         const data = await res.json();
 
-        document.getElementById("resDiseaseName").textContent = data.disease;
-        document.getElementById("resDiseaseTelugu").textContent = data.telugu;
+        document.getElementById("resDiseaseName").textContent = currentLang === "te" ? data.telugu : data.disease;
+        document.getElementById("resDiseaseTelugu").textContent = currentLang === "te" ? data.disease : data.telugu;
         document.getElementById("resPathogen").textContent = data.pathogen;
         document.getElementById("resSeverity").textContent = data.severity;
         document.getElementById("resConfidence").textContent = `${data.confidence}% Confidence`;
@@ -162,7 +239,7 @@ async function submitDiseaseScan(e) {
         resultBox.classList.add("active");
         resultBox.scrollIntoView({ behavior: "smooth", block: "nearest" });
     } catch (err) {
-        alert("Diagnosis failed. Try again.");
+        alert(currentLang === "te" ? "తెగులు గుర్తింపు విఫలమైంది." : "Diagnosis failed. Try again.");
     } finally {
         btn.disabled = false;
         btn.innerHTML = "🔍 " + (translations[currentLang]["btn_diagnose"]);
@@ -193,9 +270,10 @@ async function submitFertilizerForm(e) {
         });
         const data = await res.json();
 
-        document.getElementById("resFertUrea").textContent = `${data.fertilizer_dosage.urea.kg_per_acre} kg (${data.fertilizer_dosage.urea.bags} bags/acre)`;
-        document.getElementById("resFertDap").textContent = `${data.fertilizer_dosage.dap.kg_per_acre} kg (${data.fertilizer_dosage.dap.bags} bags/acre)`;
-        document.getElementById("resFertMop").textContent = `${data.fertilizer_dosage.mop.kg_per_acre} kg (${data.fertilizer_dosage.mop.bags} bags/acre)`;
+        const bagWord = currentLang === "te" ? "బస్తాలు" : "bags/acre";
+        document.getElementById("resFertUrea").textContent = `${data.fertilizer_dosage.urea.kg_per_acre} kg (${data.fertilizer_dosage.urea.bags} ${bagWord})`;
+        document.getElementById("resFertDap").textContent = `${data.fertilizer_dosage.dap.kg_per_acre} kg (${data.fertilizer_dosage.dap.bags} ${bagWord})`;
+        document.getElementById("resFertMop").textContent = `${data.fertilizer_dosage.mop.kg_per_acre} kg (${data.fertilizer_dosage.mop.bags} ${bagWord})`;
         document.getElementById("resOrganicAlt").textContent = data.organic_alternative;
 
         resultBox.classList.add("active");
@@ -257,4 +335,3 @@ function previewLeafImage(input) {
 document.addEventListener("DOMContentLoaded", () => {
     applyLanguage();
 });
-

@@ -82,12 +82,12 @@
                 <span>AgriConnect</span>
             </a>
             <ul class="nav-links">
-                <li><a href="/" class="active" data-i18n="nav_home">Home</a></li>
-                <li><a href="/crop" data-i18n="nav_crop">Crop Recommendation</a></li>
-                <li><a href="/disease" data-i18n="nav_disease">Disease Detection</a></li>
-                <li><a href="/weather" data-i18n="nav_weather">Weather Alerts</a></li>
-                <li><a href="/market" data-i18n="nav_market">Market Prices</a></li>
-                <li><a href="/fertilizer" data-i18n="nav_fertilizer">Fertilizer</a></li>
+                <li><a href="/" class="active" data-i18n="nav_home">హోమ్</a></li>
+                <li><a href="/crop" data-i18n="nav_crop">పంట సిఫార్సు</a></li>
+                <li><a href="/disease" data-i18n="nav_disease">తెగుళ్ల గుర్తింపు</a></li>
+                <li><a href="/weather" data-i18n="nav_weather">వాతావరణం</a></li>
+                <li><a href="/market" data-i18n="nav_market">మార్కెట్ ధరలు</a></li>
+                <li><a href="/fertilizer" data-i18n="nav_fertilizer">ఎరువుల సూచన</a></li>
                 <li><button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">Switch to English</button></li>
             </ul>
         </div>
@@ -102,19 +102,19 @@
             <div class="hero-stats">
                 <div class="stat-item">
                     <div class="stat-num">22+</div>
-                    <div class="stat-label">Crops Supported</div>
+                    <div class="stat-label" data-i18n="stat_crops">పంటల సపోర్ట్</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">98.5%</div>
-                    <div class="stat-label">Model Accuracy</div>
+                    <div class="stat-label" data-i18n="stat_accuracy">మోడల్ ఖచ్చితత్వం</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">15+</div>
-                    <div class="stat-label">Plant Diseases</div>
+                    <div class="stat-label" data-i18n="stat_diseases">ఆకు తెగుళ్లు</div>
                 </div>
                 <div class="stat-item">
                     <div class="stat-num">Live</div>
-                    <div class="stat-label">Mandi Rates</div>
+                    <div class="stat-label" data-i18n="stat_mandi">లైవ్ మార్కెట్ ధరలు</div>
                 </div>
             </div>
         </section>
@@ -125,60 +125,60 @@
             <a href="/crop" class="feature-card">
                 <div>
                     <span class="card-icon">🌱</span>
-                    <h3 class="card-title">Crop Recommendation</h3>
-                    <p class="card-desc">Machine Learning models (Random Forest & Naive Bayes) analyze Soil N-P-K, pH, temperature, and rainfall to recommend the highest yielding crop.</p>
+                    <h3 class="card-title" data-i18n="card1_title">పంట సిఫార్సు</h3>
+                    <p class="card-desc" data-i18n="card1_desc">నేలలోని నత్రజని, భాస్వరం, పొటాషియం (N-P-K), pH, ఉష్ణోగ్రత మరియు వర్షపాతం ఆధారంగా అత్యధిక దిగుబడినిచ్చే పంటను మెషిన్ లెర్నింగ్ మోడల్స్ సిఫార్సు చేస్తాయి.</p>
                 </div>
-                <span class="card-link">Analyze Soil & Recommend Crop &rarr;</span>
+                <span class="card-link" data-i18n="card1_link">నేలను విశ్లేషించి పంటను తెలుసుకోండి &rarr;</span>
             </a>
 
             <!-- Disease Detection -->
             <a href="/disease" class="feature-card">
                 <div>
                     <span class="card-icon">🍃</span>
-                    <h3 class="card-title">Plant Disease Detection</h3>
-                    <p class="card-desc">Upload a smartphone photo of any diseased leaf. Deep Learning CNN model instantly diagnoses the disease with organic & chemical treatment remedies.</p>
+                    <h3 class="card-title" data-i18n="card2_title">మొక్కల తెగుళ్ల గుర్తింపు</h3>
+                    <p class="card-desc" data-i18n="card2_desc">తెగులు సోకిన ఆకు ఫోటోను అప్‌లోడ్ చేయండి. డీప్ లెర్నింగ్ CNN మోడల్ తెగులును గుర్తించి, సేంద్రీయ మరియు రసాయన నివారణ మందులను వెంటనే సూచిస్తుంది.</p>
                 </div>
-                <span class="card-link">Scan Plant Leaf &rarr;</span>
+                <span class="card-link" data-i18n="card2_link">ఆకు ఫోటోను స్కాన్ చేయండి &rarr;</span>
             </a>
 
             <!-- Weather Alerts -->
             <a href="/weather" class="feature-card">
                 <div>
                     <span class="card-icon">🌦️</span>
-                    <h3 class="card-title">Weather & Agro-Advisories</h3>
-                    <p class="card-desc">Live agro-meteorological advisories. Instant alerts for rainfall, frost, heat waves, and best time windows for spraying pesticides and fertilizers.</p>
+                    <h3 class="card-title" data-i18n="card3_title">వాతావరణం & వ్యవసాయ హెచ్చరికలు</h3>
+                    <p class="card-desc" data-i18n="card3_desc">నిజ సమయ వ్యవసాయ-వాతావరణ సూచనలు. వర్షపాతం, ఎండ తీవ్రత మరియు పురుగుమందులు పిచికారీ చేయడానికి సరైన సమయాలపై తక్షణ హెచ్చరికలు.</p>
                 </div>
-                <span class="card-link">Check Weather & Alerts &rarr;</span>
+                <span class="card-link" data-i18n="card3_link">వాతావరణ సమాచారాన్ని చూడండి &rarr;</span>
             </a>
 
             <!-- Market Prices -->
             <a href="/market" class="feature-card">
                 <div>
                     <span class="card-icon">💰</span>
-                    <h3 class="card-title">Mandi Market Prices</h3>
-                    <p class="card-desc">Daily updated APMC Mandi rates across Telangana, Andhra Pradesh, and India. Check Min, Max, and Modal prices with daily price trends.</p>
+                    <h3 class="card-title" data-i18n="card4_title">మార్కెట్ ధరల సమాచారం (మండి)</h3>
+                    <p class="card-desc" data-i18n="card4_desc">తెలంగాణ, ఆంధ్రప్రదేశ్ మరియు భారతదేశంలోని ప్రధాన వ్యవసాయ మార్కెట్ల ప్రస్తుత ధరలు (కనీస, గరిష్ట, సగటు ధరలు ₹/క్వింటాల్).</p>
                 </div>
-                <span class="card-link">Track Mandi Rates &rarr;</span>
+                <span class="card-link" data-i18n="card4_link">మార్కెట్ ధరలను ట్రాక్ చేయండి &rarr;</span>
             </a>
 
             <!-- Fertilizer Suggestion -->
             <a href="/fertilizer" class="feature-card">
                 <div>
                     <span class="card-icon">🧪</span>
-                    <h3 class="card-title">Fertilizer Calculator</h3>
-                    <p class="card-desc">Calculate exact commercial fertilizer requirements (Urea, DAP, MOP bags per acre) based on soil test deficits and target crop nutrition needs.</p>
+                    <h3 class="card-title" data-i18n="card5_title">ఎరువుల మోతాదు కాలిక్యులేటర్</h3>
+                    <p class="card-desc" data-i18n="card5_desc">నేల పరీక్ష ఫలితాలు మరియు పంట అవసరాల ఆధారంగా ఎకరాకు కావలసిన యూరియా, డీఏపీ (DAP), పొటాష్ బస్తాల సంఖ్యను ఖచ్చితంగా లెక్కిస్తుంది.</p>
                 </div>
-                <span class="card-link">Calculate Fertilizer Dosage &rarr;</span>
+                <span class="card-link" data-i18n="card5_link">ఎరువుల మోతాదును లెక్కించండి &rarr;</span>
             </a>
 
             <!-- Interactive Telugu Support & Smart Assist -->
             <div class="feature-card" onclick="openSmartAssistModal()" style="cursor: pointer; background: linear-gradient(135deg, #f0fdf4, #e0f2fe); border-color: #86efac;">
                 <div>
                     <span class="card-icon">🗣️</span>
-                    <h3 class="card-title" style="color: #15803d;">Telugu Support & Smart Assist</h3>
-                    <p class="card-desc">రైతు సహాయకారి (Farmer AI Assistant). క్లిక్ చేసి ప్రశ్నలు అడగండి లేదా భాషను తెలుగు/ఇంగ్లీషులోకి మార్చుకోండి.</p>
+                    <h3 class="card-title" data-i18n="card6_title" style="color: #15803d;">తెలుగు సహాయం & స్మార్ట్ అసిస్టెంట్</h3>
+                    <p class="card-desc" data-i18n="card6_desc">రైతులకు ఉపయోగపడే స్మార్ట్ అసిస్టెంట్. వ్యవసాయ సలహాలు పొందడానికి, వాయిస్ అసిస్టెంట్ వినడానికి లేదా భాషను మార్చుకోవడానికి ఇక్కడ క్లిక్ చేయండి.</p>
                 </div>
-                <span class="card-link" style="color: #166534; font-weight: 700;">Open Telugu Smart Assist &rarr;</span>
+                <span class="card-link" data-i18n="card6_link" style="color: #166534; font-weight: 700;">స్మార్ట్ అసిస్టెంట్‌ని తెరవండి &rarr;</span>
             </div>
         </div>
     </main>
@@ -193,16 +193,16 @@
                 <button class="close-btn" onclick="closeSmartAssistModal()">&times;</button>
             </div>
 
-            <div style="margin-bottom: 1rem; display: flex; gap: 8px;">
+            <div style="margin-bottom: 1rem; display: flex; gap: 8px; flex-wrap: wrap;">
                 <button type="button" class="btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="toggleLanguage(); closeSmartAssistModal();">
-                    🔄 భాష మార్చండి (Toggle Telugu / English)
+                    🔄 భాష మార్చండి (Switch Telugu / English)
                 </button>
                 <button type="button" class="btn-preset" onclick="speakCurrentAnswer()">
                     🔊 చదివి వినిపించు (Voice Assist)
                 </button>
             </div>
 
-            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.8rem;">సలహా కోసం ప్రశ్నపై క్లిక్ చేయండి (Click a question below):</p>
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.8rem;">సలహా కోసం ప్రశ్నపై క్లిక్ చేయండి:</p>
 
             <button class="faq-pill" onclick="showAnswer(1)">
                 🌾 వరిలో అగ్గితెగులు (Rice Blast) వస్తే ఏం చేయాలి?
@@ -225,8 +225,8 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2026 AgriConnect: AI-Based Agriculture Support System. All Rights Reserved.</p>
-        <p style="margin-top: 4px; font-size: 0.8rem; color: #64748b;">Designed for Farmers &bull; Machine Learning & Deep Learning Powered</p>
+        <p data-i18n="footer_rights">&copy; 2026 AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ. సర్వహక్కులు ప్రత్యేకించబడ్డాయి.</p>
+        <p data-i18n="footer_sub" style="margin-top: 4px; font-size: 0.8rem; color: #64748b;">రైతుల కోసం రూపొందించబడింది • మెషిన్ లెర్నింగ్ & డీప్ లెర్నింగ్ ఆధారితం</p>
     </footer>
 
     <script src="/static/js/main.js"></script>
@@ -259,7 +259,7 @@
         function speakCurrentAnswer() {
             if ('speechSynthesis' in window) {
                 const utterance = new SpeechSynthesisUtterance(currentActiveText);
-                utterance.lang = "te-IN"; // Telugu
+                utterance.lang = "te-IN";
                 utterance.rate = 0.9;
                 window.speechSynthesis.speak(utterance);
             } else {
