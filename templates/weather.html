@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather & Agro Alerts - AgriConnect</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="brand">
+                <span class="brand-icon">🌾</span>
+                <span>AgriConnect</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" data-i18n="nav_home">Home</a></li>
+                <li><a href="/crop" data-i18n="nav_crop">Crop Recommendation</a></li>
+                <li><a href="/disease" data-i18n="nav_disease">Disease Detection</a></li>
+                <li><a href="/weather" class="active" data-i18n="nav_weather">Weather Alerts</a></li>
+                <li><a href="/market" data-i18n="nav_market">Market Prices</a></li>
+                <li><a href="/fertilizer" data-i18n="nav_fertilizer">Fertilizer</a></li>
+                <li><button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">Switch to English</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="app-card">
+            <div class="section-header">
+                <h2>🌦️ Agricultural Weather & Climate Advisories</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Real-time weather parameters and agricultural advisories for spray schedules, irrigation, and rain safety.</p>
+            </div>
+
+            <!-- City search -->
+            <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem; max-width: 480px;">
+                <input type="text" id="weatherCityInput" class="form-control" placeholder="Enter City/District (e.g. Warangal, Guntur)" value="Warangal">
+                <button type="button" class="btn-primary" onclick="searchWeather()">Search</button>
+            </div>
+
+            <!-- Live Weather Display -->
+            <div style="background: linear-gradient(135deg, #0284c7, #0369a1); color: white; border-radius: 14px; padding: 1.8rem; margin-bottom: 1.8rem;">
+                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                    <div>
+                        <h3 id="wCity" style="font-size: 2rem;">Warangal</h3>
+                        <p id="wCondition" style="font-size: 1.1rem; opacity: 0.9;">Partly Cloudy</p>
+                    </div>
+                    <div id="wTemp" style="font-size: 3rem; font-weight: 700;">28.5°C</div>
+                </div>
+
+                <div class="hero-stats" style="margin-top: 1.5rem; justify-content: flex-start;">
+                    <div class="stat-item" style="background: rgba(255,255,255,0.2);">
+                        <div class="stat-label">Humidity</div>
+                        <div id="wHumidity" class="stat-num">78%</div>
+                    </div>
+                    <div class="stat-item" style="background: rgba(255,255,255,0.2);">
+                        <div class="stat-label">Rain Probability</div>
+                        <div id="wRain" class="stat-num">30%</div>
+                    </div>
+                    <div class="stat-item" style="background: rgba(255,255,255,0.2);">
+                        <div class="stat-label">Wind Speed</div>
+                        <div id="wWind" class="stat-num">12 km/h</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Agro Advisories -->
+            <h3 style="color: var(--primary-dark); margin-bottom: 1rem;">🌾 Farm Management Advisories (వ్యవసాయ సలహాలు):</h3>
+            <div id="wAdvisories">
+                <div style="border-left: 4px solid #16a34a; background: #f0fdf4; padding: 0.8rem; border-radius: 8px; margin-bottom: 0.8rem;">
+                    <strong>Spraying Conditions Favorable (పిచికారీకి అనుకూలం)</strong>
+                    <p style="margin: 4px 0; font-size: 0.9rem;">Weather is clear. Ideal conditions for foliar nutrient sprays between 7:00 AM - 10:00 AM.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AgriConnect &bull; Weather & Agro-Advisories Module</p>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
+

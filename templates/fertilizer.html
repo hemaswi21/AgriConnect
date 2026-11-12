@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fertilizer Calculator - AgriConnect</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="brand">
+                <span class="brand-icon">🌾</span>
+                <span>AgriConnect</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" data-i18n="nav_home">Home</a></li>
+                <li><a href="/crop" data-i18n="nav_crop">Crop Recommendation</a></li>
+                <li><a href="/disease" data-i18n="nav_disease">Disease Detection</a></li>
+                <li><a href="/weather" data-i18n="nav_weather">Weather Alerts</a></li>
+                <li><a href="/market" data-i18n="nav_market">Market Prices</a></li>
+                <li><a href="/fertilizer" class="active" data-i18n="nav_fertilizer">Fertilizer</a></li>
+                <li><button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">Switch to English</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="app-card">
+            <div class="section-header">
+                <h2>🧪 Precision Fertilizer Dosage Calculator</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Calculate scientific nutrient deficits and get exact bags of Urea, DAP, and Potash (MOP) required per acre.</p>
+            </div>
+
+            <form onsubmit="submitFertilizerForm(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="fert_crop">Target Crop (వేయబోయే పంట):</label>
+                        <select id="fert_crop" class="form-control">
+                            <option value="Rice">Rice / Paddy (వరి)</option>
+                            <option value="Cotton">Cotton (ప్రత్తి)</option>
+                            <option value="Maize">Maize (మొక్కజొన్న)</option>
+                            <option value="Chilli">Chilli (మిర్చి)</option>
+                            <option value="Sugarcane">Sugarcane (చెరకు)</option>
+                            <option value="Wheat">Wheat (గోధుమ)</option>
+                            <option value="Banana">Banana (అరటి)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fert_n">Available Soil Nitrogen (N) - kg/ha:</label>
+                        <input type="number" id="fert_n" class="form-control" placeholder="e.g. 40" value="40" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fert_p">Available Soil Phosphorus (P) - kg/ha:</label>
+                        <input type="number" id="fert_p" class="form-control" placeholder="e.g. 20" value="20" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fert_k">Available Soil Potassium (K) - kg/ha:</label>
+                        <input type="number" id="fert_k" class="form-control" placeholder="e.g. 25" value="25" required>
+                    </div>
+                </div>
+
+                <button type="submit" id="fertSubmitBtn" class="btn-primary">
+                    🧪 <span data-i18n="btn_calculate">ఎరువులను లెక్కించండి (Calculate)</span>
+                </button>
+            </form>
+
+            <!-- Results -->
+            <div id="fertResult" class="result-box">
+                <h3 style="color: var(--primary-dark); margin-bottom: 1rem;">📋 Recommended Commercial Fertilizer Dosage (Per Acre):</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; margin-bottom: 1.2rem;">
+                    <div style="background: white; border: 1px solid #bbf7d0; padding: 1.2rem; border-radius: 10px;">
+                        <span style="font-weight: 600; color: #15803d;">Urea (46% Nitrogen)</span>
+                        <div id="resFertUrea" style="font-size: 1.3rem; font-weight: 700; color: #166534; margin-top: 6px;"></div>
+                    </div>
+
+                    <div style="background: white; border: 1px solid #bbf7d0; padding: 1.2rem; border-radius: 10px;">
+                        <span style="font-weight: 600; color: #15803d;">DAP (18% N, 46% P)</span>
+                        <div id="resFertDap" style="font-size: 1.3rem; font-weight: 700; color: #166534; margin-top: 6px;"></div>
+                    </div>
+
+                    <div style="background: white; border: 1px solid #bbf7d0; padding: 1.2rem; border-radius: 10px;">
+                        <span style="font-weight: 600; color: #15803d;">MOP / Potash (60% K)</span>
+                        <div id="resFertMop" style="font-size: 1.3rem; font-weight: 700; color: #166534; margin-top: 6px;"></div>
+                    </div>
+                </div>
+
+                <div style="background: #f0fdf4; border-left: 4px solid #16a34a; padding: 1rem; border-radius: 8px;">
+                    <strong>🌱 Organic Farming Advice:</strong>
+                    <p id="resOrganicAlt" style="margin-top: 4px; font-size: 0.95rem;"></p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AgriConnect &bull; Precision Fertilizer Module</p>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
+

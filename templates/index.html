@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgriConnect - AI Agriculture Support Platform</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="brand">
+                <span class="brand-icon">🌾</span>
+                <span>AgriConnect</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" class="active" data-i18n="nav_home">Home</a></li>
+                <li><a href="/crop" data-i18n="nav_crop">Crop Recommendation</a></li>
+                <li><a href="/disease" data-i18n="nav_disease">Disease Detection</a></li>
+                <li><a href="/weather" data-i18n="nav_weather">Weather Alerts</a></li>
+                <li><a href="/market" data-i18n="nav_market">Market Prices</a></li>
+                <li><a href="/fertilizer" data-i18n="nav_fertilizer">Fertilizer</a></li>
+                <li><button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">Switch to English</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Hero -->
+        <section class="hero">
+            <h1 data-i18n="hero_title">AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ</h1>
+            <p data-i18n="hero_sub">నేల స్వభావం ఆధారంగా పంటల సిఫార్సు, ఆకు తెగుళ్ల గుర్తింపు, లైవ్ మార్కెట్ ధరలు మరియు వ్యవసాయ వాతావరణ హెచ్చరికలు ఒకే చోట.</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-num">22+</div>
+                    <div class="stat-label">Crops Supported</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">98.5%</div>
+                    <div class="stat-label">Model Accuracy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">15+</div>
+                    <div class="stat-label">Plant Diseases</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-num">Live</div>
+                    <div class="stat-label">Mandi Rates</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Feature Modules Grid -->
+        <div class="cards-grid">
+            <!-- Crop Recommendation -->
+            <a href="/crop" class="feature-card">
+                <div>
+                    <span class="card-icon">🌱</span>
+                    <h3 class="card-title">Crop Recommendation</h3>
+                    <p class="card-desc">Machine Learning models (Random Forest & Naive Bayes) analyze Soil N-P-K, pH, temperature, and rainfall to recommend the highest yielding crop.</p>
+                </div>
+                <span class="card-link">Analyze Soil & Recommend Crop &rarr;</span>
+            </a>
+
+            <!-- Disease Detection -->
+            <a href="/disease" class="feature-card">
+                <div>
+                    <span class="card-icon">🍃</span>
+                    <h3 class="card-title">Plant Disease Detection</h3>
+                    <p class="card-desc">Upload a smartphone photo of any diseased leaf. Deep Learning CNN model instantly diagnoses the disease with organic & chemical treatment remedies.</p>
+                </div>
+                <span class="card-link">Scan Plant Leaf &rarr;</span>
+            </a>
+
+            <!-- Weather Alerts -->
+            <a href="/weather" class="feature-card">
+                <div>
+                    <span class="card-icon">🌦️</span>
+                    <h3 class="card-title">Weather & Agro-Advisories</h3>
+                    <p class="card-desc">Live agro-meteorological advisories. Instant alerts for rainfall, frost, heat waves, and best time windows for spraying pesticides and fertilizers.</p>
+                </div>
+                <span class="card-link">Check Weather & Alerts &rarr;</span>
+            </a>
+
+            <!-- Market Prices -->
+            <a href="/market" class="feature-card">
+                <div>
+                    <span class="card-icon">💰</span>
+                    <h3 class="card-title">Mandi Market Prices</h3>
+                    <p class="card-desc">Daily updated APMC Mandi rates across Telangana, Andhra Pradesh, and India. Check Min, Max, and Modal prices with daily price trends.</p>
+                </div>
+                <span class="card-link">Track Mandi Rates &rarr;</span>
+            </a>
+
+            <!-- Fertilizer Suggestion -->
+            <a href="/fertilizer" class="feature-card">
+                <div>
+                    <span class="card-icon">🧪</span>
+                    <h3 class="card-title">Fertilizer Calculator</h3>
+                    <p class="card-desc">Calculate exact commercial fertilizer requirements (Urea, DAP, MOP bags per acre) based on soil test deficits and target crop nutrition needs.</p>
+                </div>
+                <span class="card-link">Calculate Fertilizer Dosage &rarr;</span>
+            </a>
+
+            <!-- Farmer Advisory / Future Scope -->
+            <div class="feature-card" style="background: linear-gradient(135deg, #f0fdf4, #e0f2fe);">
+                <div>
+                    <span class="card-icon">🗣️</span>
+                    <h3 class="card-title">Telugu Support & Smart Assist</h3>
+                    <p class="card-desc">Built-in bilingual interface in English and Telugu for local farmers. Clean mobile design allows direct in-field usage on smartphones.</p>
+                </div>
+                <span class="card-link" style="color: #15803d;">Bilingual Agriculture Assistant &check;</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 AgriConnect: AI-Based Agriculture Support System. All Rights Reserved.</p>
+        <p style="margin-top: 4px; font-size: 0.8rem; color: #64748b;">Designed for Farmers &bull; Machine Learning & Deep Learning Powered</p>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
+

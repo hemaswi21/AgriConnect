@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation - AgriConnect</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="brand">
+                <span class="brand-icon">🌾</span>
+                <span>AgriConnect</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" data-i18n="nav_home">Home</a></li>
+                <li><a href="/crop" class="active" data-i18n="nav_crop">Crop Recommendation</a></li>
+                <li><a href="/disease" data-i18n="nav_disease">Disease Detection</a></li>
+                <li><a href="/weather" data-i18n="nav_weather">Weather Alerts</a></li>
+                <li><a href="/market" data-i18n="nav_market">Market Prices</a></li>
+                <li><a href="/fertilizer" data-i18n="nav_fertilizer">Fertilizer</a></li>
+                <li><button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">Switch to English</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="app-card">
+            <div class="section-header">
+                <h2>🌱 AI Crop Recommendation System</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Enter soil nutrients (N-P-K), soil pH, and environmental climate data to predict the best crop for maximum yield.</p>
+            </div>
+
+            <!-- Quick Presets -->
+            <div class="preset-container">
+                <span style="font-weight: 600; font-size: 0.85rem; color: var(--text-muted);">Quick Soil Presets:</span>
+                <button type="button" class="btn-preset" onclick="applyPreset('rice')">🌾 Paddy / Rice Soil</button>
+                <button type="button" class="btn-preset" onclick="applyPreset('cotton')">☁️ Black Soil Cotton</button>
+                <button type="button" class="btn-preset" onclick="applyPreset('maize')">🌽 Loamy Soil Maize</button>
+                <button type="button" class="btn-preset" onclick="applyPreset('chickpea')">🧆 Dry Climate Chickpea</button>
+            </div>
+
+            <form onsubmit="submitCropForm(event)">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="nitrogen">Nitrogen (N) - kg/ha</label>
+                        <input type="number" step="any" id="nitrogen" class="form-control" placeholder="e.g. 80" value="80" required>
+                        <span class="form-helper">Range: 0 - 140</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phosphorus">Phosphorus (P) - kg/ha</label>
+                        <input type="number" step="any" id="phosphorus" class="form-control" placeholder="e.g. 48" value="48" required>
+                        <span class="form-helper">Range: 5 - 145</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="potassium">Potassium (K) - kg/ha</label>
+                        <input type="number" step="any" id="potassium" class="form-control" placeholder="e.g. 40" value="40" required>
+                        <span class="form-helper">Range: 5 - 205</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="temperature">Temperature (°C)</label>
+                        <input type="number" step="any" id="temperature" class="form-control" placeholder="e.g. 25.0" value="24.0" required>
+                        <span class="form-helper">Average daily temperature</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="humidity">Humidity (%)</label>
+                        <input type="number" step="any" id="humidity" class="form-control" placeholder="e.g. 80" value="82" required>
+                        <span class="form-helper">Relative humidity</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ph">Soil pH Level</label>
+                        <input type="number" step="any" id="ph" class="form-control" placeholder="e.g. 6.5" value="6.5" required>
+                        <span class="form-helper">Acidity / Alkalinity (3.5 - 9.5)</span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rainfall">Rainfall (mm)</label>
+                        <input type="number" step="any" id="rainfall" class="form-control" placeholder="e.g. 200" value="220" required>
+                        <span class="form-helper">Seasonal average rainfall</span>
+                    </div>
+                </div>
+
+                <button type="submit" id="cropSubmitBtn" class="btn-primary">
+                    🌱 <span data-i18n="btn_predict">విశ్లేషించండి (Predict)</span>
+                </button>
+            </form>
+
+            <!-- Results Section -->
+            <div id="cropResult" class="result-box">
+                <div class="result-header">
+                    <div id="resCropIcon" class="result-icon">🌾</div>
+                    <div>
+                        <div id="resCropName" class="result-title">Rice - వరి (Rice)</div>
+                        <span id="resConfidence" class="badge badge-success">Accuracy: 95%</span>
+                    </div>
+                </div>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem; background: white; padding: 1.2rem; border-radius: 10px;">
+                    <div>
+                        <strong>Recommended Season:</strong>
+                        <p id="resSeason" style="color: var(--primary);">Kharif / Rabi</p>
+                    </div>
+                    <div>
+                        <strong>Water Requirement:</strong>
+                        <p id="resWater" style="color: var(--primary);">High</p>
+                    </div>
+                    <div>
+                        <strong>Ideal Soil Type:</strong>
+                        <p id="resSoil" style="color: var(--primary);">Clayey / Alluvial</p>
+                    </div>
+                </div>
+
+                <div style="margin-top: 1.2rem;">
+                    <strong>Alternative Viable Crops:</strong>
+                    <div id="resAlternatives" style="margin-top: 0.4rem;"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AgriConnect &bull; Crop Recommendation Module</p>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+</body>
+</html>
+

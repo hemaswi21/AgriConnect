@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mandi Market Prices - AgriConnect</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="brand">
+                <span class="brand-icon">🌾</span>
+                <span>AgriConnect</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="/" data-i18n="nav_home">Home</a></li>
+                <li><a href="/crop" data-i18n="nav_crop">Crop Recommendation</a></li>
+                <li><a href="/disease" data-i18n="nav_disease">Disease Detection</a></li>
+                <li><a href="/weather" data-i18n="nav_weather">Weather Alerts</a></li>
+                <li><a href="/market" class="active" data-i18n="nav_market">Market Prices</a></li>
+                <li><a href="/fertilizer" data-i18n="nav_fertilizer">Fertilizer</a></li>
+                <li><button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">Switch to English</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="app-card">
+            <div class="section-header">
+                <h2>💰 APMC Mandi Market Rates & Price Intelligence</h2>
+                <p style="color: var(--text-muted); font-size: 0.95rem;">Live agricultural commodity prices (₹/Quintal) across major agricultural markets in Telangana, Andhra Pradesh, and India.</p>
+            </div>
+
+            <!-- Filter input -->
+            <div style="display: flex; gap: 0.8rem; margin-bottom: 1.5rem; max-width: 480px;">
+                <input type="text" id="marketSearchInput" class="form-control" placeholder="Search crop or mandi (e.g. Cotton, Guntur, Rice)" oninput="filterMandiTable()">
+            </div>
+
+            <div class="table-responsive">
+                <table class="custom-table" id="mandiTable">
+                    <thead>
+                        <tr>
+                            <th>Commodity (పంట)</th>
+                            <th>Market / Mandi</th>
+                            <th>Variety</th>
+                            <th>Min Price (₹)</th>
+                            <th>Max Price (₹)</th>
+                            <th>Modal Price (₹/Qtl)</th>
+                            <th>Trend</th>
+                        </tr>
+                    </thead>
+                    <tbody id="mandiTableBody">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 AgriConnect &bull; APMC / Agmarknet Market Intelligence</p>
+    </footer>
+
+    <script src="/static/js/main.js"></script>
+    <script>
+        let allMandiData = [];
+        async function loadMandiData() {
+            try {
+                const res = await fetch("/api/market-prices");
+                allMandiData = await res.json();
+                renderTable(allMandiData);
+            } catch (e) {
+                console.error("Failed to load mandi data", e);
+            }
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById("mandiTableBody");
+            tbody.innerHTML = "";
+            data.forEach(item => {
+                const tr = document.createElement("tr");
+                const trendBadge = item.status === "up" 
+                    ? `<span class="badge badge-success">▲ ₹${item.trend}</span>`
+                    : (item.status === "down" ? `<span class="badge badge-danger">▼ ₹${item.trend}</span>` : `<span class="badge badge-info">▬ Stable</span>`);
+                tr.innerHTML = `
+                    <td><strong>${item.commodity}</strong></td>
+                    <td>${item.market}</td>
+                    <td><span style="color: #64748b; font-size: 0.88rem;">${item.variety}</span></td>
+                    <td>₹${item.min_price}</td>
+                    <td>₹${item.max_price}</td>
+                    <td><strong style="color: #15803d; font-size: 1.05rem;">₹${item.modal_price}</strong></td>
+                    <td>${trendBadge}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function filterMandiTable() {
+            const query = document.getElementById("marketSearchInput").value.toLowerCase();
+            const filtered = allMandiData.filter(d => 
+                d.commodity.toLowerCase().includes(query) || 
+                d.market.toLowerCase().includes(query) ||
+                d.variety.toLowerCase().includes(query)
+            );
+            renderTable(filtered);
+        }
+
+        document.addEventListener("DOMContentLoaded", loadMandiData);
+    </script>
+</body>
+</html>
+
