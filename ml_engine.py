@@ -423,3 +423,93 @@ def get_mandi_prices(filter_crop=None):
     filtered = [m for m in MANDI_DATA if filter_crop.lower() in m["commodity"].lower() or filter_crop.lower() in m["market"].lower()]
     return filtered if filtered else MANDI_DATA
 
+
+
+# ==========================================
+# 6. FARMER AI CHATBOT & VOICE ASSIST ENGINE
+# ==========================================
+KNOWLEDGE_BASE = [
+    {
+        "keywords": ["వరి", "rice", "paddy", "అగ్గితెగులు", "blast", "ఆకు ఎండు", "blight"],
+        "answer_te": "వరిలో అగ్గితెగులు లేదా ఆకు ఎండు తెగులు కనిపిస్తే వెంటనే ట్రైసైక్లాజోల్ (Beam) 0.6 గ్రా/లీ లేదా కాపర్ ఆక్సిక్లోరైడ్ 2.5 గ్రా/లీ పిచికారీ చేయండి. యూరియా ఎరువులను తాత్కాలికంగా ఆపివేయండి.",
+        "phonetic_te": "Varilo aggithegulu nivaaranaku, Tricyclazole 0.6 grams leetaru neetilo kalipi spray cheyandi. Urea eruvulanu thavthkaalikamga aapeyandi.",
+        "answer_en": "For Rice Blast or Bacterial Blight, immediately spray Tricyclazole 75% WP @ 0.6g/L or Copper Oxychloride @ 2.5g/L. Temporarily stop top dressing with urea."
+    },
+    {
+        "keywords": ["ప్రత్తి", "cotton", "గులాబీ", "పురుగు", "bollworm", "తెల్లదోమ", "whitefly", "ముడత", "curl"],
+        "answer_te": "ప్రత్తిలో తెల్లదోమ మరియు ఆకుముడత నివారణకు పసుపు జిగురు అట్టలు ఎకరాకు 15 అమర్చండి. తీవ్రత ఎక్కువగా ఉంటే డయాఫెంథియురాన్ 1.25 గ్రా/లీ లేదా వేపనూనె 5 మి.లీ/లీ పిచికారీ చేయండి.",
+        "phonetic_te": "Pratthilo telladhoma mariyu aakumudatha nivaaranaku, pasupu jigurattalu amarchandi. Diafenthiuron 1.25 grams leedha veepanune spray cheyandi.",
+        "answer_en": "In Cotton, for whitefly and leaf curl control, install 15 yellow sticky traps per acre. For chemical control, spray Diafenthiuron 50% WP @ 1.25g/L or Neem oil 5ml/L."
+    },
+    {
+        "keywords": ["మిర్చి", "chilli", "మిరప", "తామర", "నల్ల తామర", "thrips", "బొబ్బర"],
+        "answer_te": "మిర్చిలో నల్ల తామర పురుగుల నివారణకు నీలి జిగురు అట్టలు ఎకరాకు 20 అమర్చండి. స్పైనోటోరం (Delegate) 0.9 మి.లీ/లీ లేదా ఫిప్రోనిల్ 2 మి.లీ/లీ సాయంత్రం వేళల్లో పిచికారీ చేయండి.",
+        "phonetic_te": "Mirchilo nalla thaamara purugulaku neeli jigurattalu amarchandi. Delegate leedha Fipronil saayanthram velallo spray cheyandi.",
+        "answer_en": "For Black Thrips in Chilli, install 20 blue sticky traps per acre. Spray Spinetoram (Delegate) @ 0.9ml/L or Fipronil @ 2ml/L during evening hours."
+    },
+    {
+        "keywords": ["మొక్కజొన్న", "maize", "corn", "కత్తెర", "armyworm", "తుప్పు"],
+        "answer_te": "మొక్కజొన్నలో కత్తెర పురుగు (Fall Armyworm) నివారణకు ఎమామెక్టిన్ బెంజోయేట్ 0.4 గ్రా/లీ లేదా క్లోరాంట్రానిలిప్రోల్ (Coragen) 0.4 మి.లీ/లీ సుడిలో పడేలా పిచికారీ చేయండి.",
+        "phonetic_te": "Mokkajoannalo katthera puruguku Emamectin Benzoate leedha Coragen sudilo padela spray cheyandi.",
+        "answer_en": "For Fall Armyworm in Maize, spray Emamectin Benzoate 5% SG @ 0.4g/L or Chlorantraniliprole (Coragen) @ 0.4ml/L directly into the plant whorls."
+    },
+    {
+        "keywords": ["ఎరువులు", "fertilizer", "యూరియా", "urea", "dap", "పొటాష్", "potash"],
+        "answer_te": "ఎరువులను సమతుల్యంగా వేయాలి. యూరియాను ఒకేసారి వేయకుండా 2-3 దఫాలుగా వేయాలి. భాస్వరం మరియు పొటాష్‌ను ఆఖరి దుక్కిలో వేయడం వల్ల వేర్లు బలంగా పెరుగుతాయి.",
+        "phonetic_te": "Eruvulanu samathulyamga veyali. Urea nu rendu moodu dafaaluga veyali. DAP mariyu Potash nu aakhari dukkilo veyali.",
+        "answer_en": "Apply balanced NPK fertilizers. Always split Urea into 2-3 doses. Apply full Phosphorus and Potash at the final land preparation as basal dose."
+    },
+    {
+        "keywords": ["సేంద్రీయ", "organic", "జీవామృతం", "పంచగవ్య", "వేపనూనె", "neem"],
+        "answer_te": "సేంద్రీయ పద్ధతిలో పంటలకు ఎకరాకు 200 లీటర్ల జీవామృతం లేదా 3% పంచగవ్య ద్రావణం పిచికారీ చేస్తే రోగనిరోధక శక్తి పెరిగి రసాయనాల ఖర్చు బాగా తగ్గుతుంది.",
+        "phonetic_te": "Sendreeya paddhathilo pantaku Jeevaamrutham leedha Panchagavya spray chesthe roganirodhaka shakthi peruguthundhi.",
+        "answer_en": "In Organic farming, apply 200 liters of Jeevamrutham or 3% Panchagavya spray per acre to enhance plant immunity and soil microbiome."
+    },
+    {
+        "keywords": ["వర్షం", "rain", "వాతావరణం", "weather", "పిచికారీ", "spray"],
+        "answer_te": "వర్షం పడే అవకాశం 40% కన్నా ఎక్కువ ఉన్నప్పుడు ఎరువులు లేదా పురుగుమందుల పిచికారీ చేయకూడదు. ఎండ ఉన్నప్పుడు ఉదయం 7 నుండి 10 గంటల మధ్య పిచికారీ ఉత్తమం.",
+        "phonetic_te": "Varsham pade avakasam unnappudu spray cheyakoodadhu. Udhayam velallo mandhulu spray cheyadam manchidhi.",
+        "answer_en": "Do not spray pesticides when rain probability is above 40%. The best time for foliar spraying is between 7:00 AM and 10:00 AM on clear sunny days."
+    },
+    {
+        "keywords": ["ధరలు", "market", "mandi", "ధర", "rate", "అమ్మకం"],
+        "answer_te": "మార్కెట్ ధరలు రోజూ మారుతుంటాయి. మా వెబ్‌సైట్‌లోని 'మార్కెట్ ధరలు' పేజీలో వరంగల్, ఖమ్మం, గుంటూరు మార్కెట్ల ప్రస్తుత లైవ్ ధరలను తనిఖీ చేసి సరైన ధరకు అమ్మండి.",
+        "phonetic_te": "Market dharalu rooju maaruthuntaayi. Mana website lo Mandi Rates page chusi manchi dharaku ammandi.",
+        "answer_en": "Market prices change daily. Check our live Mandi Market Prices page to compare rates across Warangal, Guntur, and Nizamabad before selling your produce."
+    }
+]
+
+def ask_agriculture_ai(query, lang="te"):
+    q = (query or "").lower().strip()
+    if not q:
+        return {
+            "query": query,
+            "answer_te": "నమస్కారం! పంటల తెగుళ్లు, ఎరువులు లేదా వ్యవసాయ సలహాల గురించి మీ సందేహాన్ని అడగండి.",
+            "phonetic_te": "Namaskaram! Pantala thegullu, eruvulu leedha vyavasaaya sandhehaalanu adagandi.",
+            "answer_en": "Hello! Ask any question about crop diseases, fertilizer dosage, weather, or agriculture advisories."
+        }
+
+    # Match keywords in knowledge base
+    best_match = None
+    max_score = 0
+    for item in KNOWLEDGE_BASE:
+        score = sum(1 for kw in item["keywords"] if kw in q)
+        if score > max_score:
+            max_score = score
+            best_match = item
+
+    if best_match:
+        return {
+            "query": query,
+            "answer_te": best_match["answer_te"],
+            "phonetic_te": best_match["phonetic_te"],
+            "answer_en": best_match["answer_en"]
+        }
+    else:
+        # Intelligent contextual fallback
+        return {
+            "query": query,
+            "answer_te": f"మీరు అడిగిన '{query}' పై మా AI వ్యవసాయ నిపుణుల సలహా: పంట నేల స్వభావాన్ని పరీక్షించి సమతుల్య ఎరువులు వేయండి. తెగుళ్ల నివారణకు వేపనూనె లేదా తగిన సిఫార్సు మందులను వ్యవసాయ అధికారి సలహాతో పిచికారీ చేయండి.",
+            "phonetic_te": f"Panta nela swabhaavanni pareekshinchi samathulya eruvulu veyandi. Veepanune leedha sifarashu chesina mandhulu spray cheyandi.",
+            "answer_en": f"Regarding your question '{query}': Always test soil before sowing. Apply balanced NPK fertilizers and spray Neem oil or recommended bio-pesticides for early pest control."
+        }

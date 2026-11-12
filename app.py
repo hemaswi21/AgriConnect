@@ -96,6 +96,14 @@ if FLASK_AVAILABLE:
         crop = request.args.get("crop", None)
         return jsonify(ml_engine.get_mandi_prices(crop))
 
+    @app.route("/api/smart-assist", methods=["POST"])
+    def api_smart_assist():
+        data = request.get_json(force=True)
+        query = data.get("query", "")
+        lang = data.get("lang", "te")
+        result = ml_engine.ask_agriculture_ai(query, lang)
+        return jsonify(result)
+
     def run_server(port=5000):
         print(f"\n=======================================================")
         print(f"🌾 AgriConnect Flask Server Running at: http://127.0.0.1:{port}")
@@ -201,6 +209,17 @@ else:
                         soil_k=data.get("soil_k", 20),
                         target_crop=data.get("crop", "Rice")
                     )
+                    self._send_json(res)
+                except Exception as e:
+                    self._send_json({"error": str(e)}, status=400)
+                return
+
+            if path == "/api/smart-assist":
+                try:
+                    data = json.loads(post_body.decode("utf-8"))
+                    query = data.get("query", "")
+                    lang = data.get("lang", "te")
+                    res = ml_engine.ask_agriculture_ai(query, lang)
                     self._send_json(res)
                 except Exception as e:
                     self._send_json({"error": str(e)}, status=400)

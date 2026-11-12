@@ -23,11 +23,13 @@
         .modal-card {
             background: white;
             border-radius: 16px;
-            max-width: 520px;
+            max-width: 560px;
             width: 100%;
             padding: 1.8rem;
             box-shadow: var(--shadow-lg);
             animation: fadeIn 0.3s ease;
+            max-height: 90vh;
+            overflow-y: auto;
         }
         .modal-header {
             display: flex;
@@ -47,11 +49,11 @@
         .faq-pill {
             background: #f1f5f9;
             border: 1px solid #cbd5e1;
-            padding: 0.6rem 0.9rem;
+            padding: 0.55rem 0.85rem;
             border-radius: 8px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             cursor: pointer;
-            margin-bottom: 0.6rem;
+            margin-bottom: 0.5rem;
             display: block;
             width: 100%;
             text-align: left;
@@ -190,7 +192,7 @@
         <div class="modal-card">
             <div class="modal-header">
                 <h3 style="color: var(--primary-dark); display: flex; align-items: center; gap: 8px;">
-                    🗣️ రైతు స్మార్ట్ అసిస్టెంట్ (Smart Assist)
+                    🗣️ రైతు స్మార్ట్ అసిస్టెంట్ & వాయిస్ చాట్
                 </h3>
                 <button class="close-btn" onclick="closeSmartAssistModal()">&times;</button>
             </div>
@@ -204,7 +206,26 @@
                 </button>
             </div>
 
-            <p id="faqPrompt" style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.8rem;">సలహా కోసం ప్రశ్నపై క్లిక్ చేయండి:</p>
+            <!-- Voice & Text Question Input Section -->
+            <div style="margin-bottom: 1.2rem; background: #f8fafc; padding: 1rem; border-radius: 12px; border: 1px solid #cbd5e1;">
+                <label style="font-weight: 600; font-size: 0.9rem; color: #1e293b; margin-bottom: 6px; display: block;">
+                    🎙️ మీ ప్రశ్నను అడగండి (Type or Speak Voice):
+                </label>
+                <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
+                    <input type="text" id="userQueryInput" class="form-control" placeholder="ఉదా: మిర్చిలో తామర పురుగు నివారణ ఏమిటి?" style="font-size: 0.92rem; padding: 0.55rem 0.8rem; flex: 1; min-width: 180px;" onkeydown="if(event.key==='Enter') sendUserQuery()">
+                    <button type="button" id="micBtn" class="btn-preset" style="background: #fee2e2; border-color: #ef4444; color: #b91c1c; font-weight: 700; padding: 0.55rem 0.85rem;" onclick="toggleVoiceRecording()">
+                        🎙️ మాట్లాడండి
+                    </button>
+                    <button type="button" id="askBtn" class="btn-primary" style="padding: 0.55rem 1rem; font-size: 0.9rem;" onclick="sendUserQuery()">
+                        అడగండి
+                    </button>
+                </div>
+                <div id="micStatus" style="font-size: 0.85rem; color: #dc2626; margin-top: 6px; display: none; font-weight: 600;">
+                    🔴 మైక్రోఫోన్ ఆన్‌లో ఉంది... మీ మాటలను వింటున్నాము, మాట్లాడండి...
+                </div>
+            </div>
+
+            <p id="faqPrompt" style="font-size: 0.88rem; color: #64748b; margin-bottom: 0.6rem;">సాధారణ ప్రశ్నలు (Quick FAQs):</p>
 
             <button class="faq-pill" onclick="showAnswer(1, this)">
                 🌾 వరిలో అగ్గితెగులు (Rice Blast) వస్తే ఏం చేయాలి?
@@ -220,7 +241,7 @@
             </button>
 
             <div id="smartAnswerBox" class="answer-box">
-                నమస్కారం రైతు సోదరులారా! వ్యవసాయ సహాయం కోసం పైన ఉన్న ఏదైనా ప్రశ్నపై క్లిక్ చేయండి.
+                నమస్కారం రైతు సోదరులారా! పైన మైక్రోఫోన్ 🎙️ నొక్కి మీ సందేహాన్ని మాట్లాడవచ్చు లేదా ప్రశ్నను టైప్ చేసి అడగవచ్చు.
             </div>
         </div>
     </div>
@@ -254,8 +275,107 @@
             4: "Do not spray pesticides or fertilizers if rain is forecast within 4 to 6 hours, as rain washes away the chemicals."
         };
 
-        let currentActiveText = "నమస్కారం రైతు సోదరులారా! వ్యవసాయ సహాయం కోసం పైన ఉన్న ఏదైనా ప్రశ్నపై క్లిక్ చేయండి.";
-        let currentActivePhonetic = "Namaskaram raitu sodharulaara! Vyavasaaya sahaayam kosam paina unna edhaina prashnapai click cheyandi.";
+        let currentActiveText = "నమస్కారం రైతు సోదరులారా! పైన మైక్రోఫోన్ నొక్కి మీ సందేహాన్ని మాట్లాడవచ్చు లేదా ప్రశ్నను టైప్ చేసి అడగవచ్చు.";
+        let currentActivePhonetic = "Namaskaram raitu sodharulaara! Paina microphone nokki mee sandhehaanni maatlaadavacchu leedha type chesi adagavacchu.";
+
+        // Speech Recognition setup (Voice to Text for Grandfather / Farmers)
+        let recognition = null;
+        let isRecording = false;
+
+        if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+            const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRec();
+            recognition.continuous = false;
+            recognition.interimResults = false;
+
+            recognition.onresult = function(event) {
+                const transcript = event.results[0][0].transcript;
+                document.getElementById("userQueryInput").value = transcript;
+                stopVoiceRecording();
+                sendUserQuery(); // Auto ask AI upon speech end!
+            };
+
+            recognition.onerror = function(err) {
+                stopVoiceRecording();
+            };
+
+            recognition.onend = function() {
+                stopVoiceRecording();
+            };
+        }
+
+        function toggleVoiceRecording() {
+            if (!recognition) {
+                alert(currentLang === 'te' ? "ఈ బ్రౌజర్‌లో వాయిస్ రికగ్నిషన్ సపోర్ట్ లేదు. దయచేసి ప్రశ్నను టైప్ చేయండి." : "Voice recognition not supported on this browser. Please type your query.");
+                return;
+            }
+            if (isRecording) {
+                stopVoiceRecording();
+            } else {
+                startVoiceRecording();
+            }
+        }
+
+        function startVoiceRecording() {
+            isRecording = true;
+            recognition.lang = currentLang === 'te' ? 'te-IN' : 'en-IN';
+            try {
+                recognition.start();
+                document.getElementById("micStatus").style.display = "block";
+                const micBtn = document.getElementById("micBtn");
+                micBtn.style.background = "#dc2626";
+                micBtn.style.color = "#ffffff";
+                micBtn.innerHTML = "⏹️ ఆపండి";
+            } catch(e) {
+                stopVoiceRecording();
+            }
+        }
+
+        function stopVoiceRecording() {
+            isRecording = false;
+            if (recognition) {
+                try { recognition.stop(); } catch(e) {}
+            }
+            document.getElementById("micStatus").style.display = "none";
+            const micBtn = document.getElementById("micBtn");
+            if (micBtn) {
+                micBtn.style.background = "#fee2e2";
+                micBtn.style.color = "#b91c1c";
+                micBtn.innerHTML = "🎙️ మాట్లాడండి";
+            }
+        }
+
+        async function sendUserQuery() {
+            const input = document.getElementById("userQueryInput");
+            const query = input.value.trim();
+            if (!query) return;
+
+            const ansBox = document.getElementById("smartAnswerBox");
+            ansBox.innerHTML = currentLang === 'te' ? "⏳ AI వ్యవసాయ సలహాను విశ్లేషిస్తోంది..." : "⏳ AI analyzing agricultural advisory...";
+
+            try {
+                const res = await fetch("/api/smart-assist", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ query: query, lang: currentLang })
+                });
+                const data = await res.json();
+
+                const isTe = currentLang === 'te';
+                const answerText = isTe ? data.answer_te : data.answer_en;
+                currentActiveText = answerText;
+                currentActivePhonetic = isTe ? data.phonetic_te : data.answer_en;
+
+                const qLabel = isTe ? "మీ ప్రశ్న:" : "Your Query:";
+                const aLabel = isTe ? "AI వ్యవసాయ సలహా:" : "AI Advisory:";
+                ansBox.innerHTML = `<strong>${qLabel}</strong> ${query}<br><br><strong>${aLabel}</strong><br>${answerText}`;
+
+                // Auto speak answer
+                speakCurrentAnswer();
+            } catch(e) {
+                ansBox.innerHTML = currentLang === 'te' ? "సమాధానం పొందడంలో సమస్య వచ్చింది. మళ్ళీ ప్రయత్నించండి." : "Failed to get advice. Please try again.";
+            }
+        }
 
         function openSmartAssistModal() {
             document.getElementById("smartAssistModal").classList.add("active");
@@ -263,6 +383,7 @@
         function closeSmartAssistModal() {
             document.getElementById("smartAssistModal").classList.remove("active");
             stopVoice();
+            stopVoiceRecording();
         }
         function closeModalOnBg(e) {
             if (e.target.id === "smartAssistModal") {
@@ -279,7 +400,7 @@
             currentActivePhonetic = isTe ? answers_te_phonetic[id] : answers_en[id];
             const prefix = isTe ? "<strong>సలహా:</strong><br>" : "<strong>Advisory:</strong><br>";
             document.getElementById("smartAnswerBox").innerHTML = `${prefix}${text}`;
-            
+
             speakCurrentAnswer();
         }
 
@@ -300,9 +421,8 @@
 
             if ('speechSynthesis' in window) {
                 const voices = window.speechSynthesis.getVoices();
-                // Check if device has an actual Telugu voice
                 const teVoice = voices.find(v => v.lang.startsWith('te') || v.name.toLowerCase().includes('telugu'));
-                
+
                 let textToSpeak = "";
                 let langToUse = "en-IN";
 
@@ -311,8 +431,6 @@
                         textToSpeak = currentActiveText;
                         langToUse = teVoice.lang;
                     } else {
-                        // Laptop has no Telugu voice installed.
-                        // Use phonetic Telugu so laptop speaks the full Telugu sentence audibly!
                         textToSpeak = currentActivePhonetic || currentActiveText;
                         langToUse = "en-IN";
                     }
