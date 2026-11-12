@@ -5,6 +5,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgriConnect - AI Agriculture Support Platform</title>
     <link rel="stylesheet" href="/static/css/style.css">
+    <style>
+        /* Smart Assist Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+        }
+        .modal-overlay.active {
+            display: flex;
+        }
+        .modal-card {
+            background: white;
+            border-radius: 16px;
+            max-width: 520px;
+            width: 100%;
+            padding: 1.8rem;
+            box-shadow: var(--shadow-lg);
+            animation: fadeIn 0.3s ease;
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--primary-light);
+            padding-bottom: 0.8rem;
+            margin-bottom: 1rem;
+        }
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.6rem;
+            cursor: pointer;
+            color: #64748b;
+        }
+        .faq-pill {
+            background: #f1f5f9;
+            border: 1px solid #cbd5e1;
+            padding: 0.5rem 0.8rem;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            display: block;
+            width: 100%;
+            text-align: left;
+            transition: all 0.2s;
+        }
+        .faq-pill:hover {
+            background: var(--primary-light);
+            border-color: var(--primary);
+            color: var(--primary-dark);
+        }
+        .answer-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--primary);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+    </style>
 </head>
 <body>
     <!-- Navbar -->
@@ -104,17 +171,57 @@
                 <span class="card-link">Calculate Fertilizer Dosage &rarr;</span>
             </a>
 
-            <!-- Farmer Advisory / Future Scope -->
-            <div class="feature-card" style="background: linear-gradient(135deg, #f0fdf4, #e0f2fe);">
+            <!-- Interactive Telugu Support & Smart Assist -->
+            <div class="feature-card" onclick="openSmartAssistModal()" style="cursor: pointer; background: linear-gradient(135deg, #f0fdf4, #e0f2fe); border-color: #86efac;">
                 <div>
                     <span class="card-icon">🗣️</span>
-                    <h3 class="card-title">Telugu Support & Smart Assist</h3>
-                    <p class="card-desc">Built-in bilingual interface in English and Telugu for local farmers. Clean mobile design allows direct in-field usage on smartphones.</p>
+                    <h3 class="card-title" style="color: #15803d;">Telugu Support & Smart Assist</h3>
+                    <p class="card-desc">రైతు సహాయకారి (Farmer AI Assistant). క్లిక్ చేసి ప్రశ్నలు అడగండి లేదా భాషను తెలుగు/ఇంగ్లీషులోకి మార్చుకోండి.</p>
                 </div>
-                <span class="card-link" style="color: #15803d;">Bilingual Agriculture Assistant &check;</span>
+                <span class="card-link" style="color: #166534; font-weight: 700;">Open Telugu Smart Assist &rarr;</span>
             </div>
         </div>
     </main>
+
+    <!-- Smart Assist Modal -->
+    <div id="smartAssistModal" class="modal-overlay" onclick="closeModalOnBg(event)">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 style="color: var(--primary-dark); display: flex; align-items: center; gap: 8px;">
+                    🗣️ రైతు స్మార్ట్ అసిస్టెంట్ (Smart Assist)
+                </h3>
+                <button class="close-btn" onclick="closeSmartAssistModal()">&times;</button>
+            </div>
+
+            <div style="margin-bottom: 1rem; display: flex; gap: 8px;">
+                <button type="button" class="btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="toggleLanguage(); closeSmartAssistModal();">
+                    🔄 భాష మార్చండి (Toggle Telugu / English)
+                </button>
+                <button type="button" class="btn-preset" onclick="speakCurrentAnswer()">
+                    🔊 చదివి వినిపించు (Voice Assist)
+                </button>
+            </div>
+
+            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.8rem;">సలహా కోసం ప్రశ్నపై క్లిక్ చేయండి (Click a question below):</p>
+
+            <button class="faq-pill" onclick="showAnswer(1)">
+                🌾 వరిలో అగ్గితెగులు (Rice Blast) వస్తే ఏం చేయాలి?
+            </button>
+            <button class="faq-pill" onclick="showAnswer(2)">
+                ☁️ ప్రత్తిలో అధిక దిగుబడి రావడానికి ఏం జాగ్రత్తలు తీసుకోవాలి?
+            </button>
+            <button class="faq-pill" onclick="showAnswer(3)">
+                🧪 ఎరువులు వేసేటప్పుడు పాటించాల్సిన ముఖ్య నియమాలు ఏమిటి?
+            </button>
+            <button class="faq-pill" onclick="showAnswer(4)">
+                🌦️ వర్షం పడే సూచన ఉన్నప్పుడు పిచికారీ చేయవచ్చా?
+            </button>
+
+            <div id="smartAnswerBox" class="answer-box">
+                నమస్కారం రైతు సోదరులారా! వ్యవసాయ సహాయం కోసం పైన ఉన్న ఏదైనా ప్రశ్నపై క్లిక్ చేయండి లేదా పైనున్న బటన్ ద్వారా భాషను మార్చుకోండి.
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer>
@@ -123,6 +230,42 @@
     </footer>
 
     <script src="/static/js/main.js"></script>
+    <script>
+        const answers = {
+            1: "వరిలో అగ్గితెగులు (Rice Blast) నివారణకు ట్రైసైక్లాజోల్ (Beam) 0.6 గ్రా/లీటరు నీటిలో కలిపి పిచికారీ చేయండి. నత్రజని (Urea) ఎరువులను అధికంగా వేయవద్దు.",
+            2: "ప్రత్తిలో అధిక దిగుబడికి నేలలో నీటి నిల్వ లేకుండా చూసుకోండి. తెల్లదోమ నివారణకు పసుపు జిగురు అట్టలు అమర్చండి. పూత దశలో బోరాన్ మరియు పొటాషియం పిచికారీ చేయండి.",
+            3: "ఎరువులను సిఫార్సు చేసిన మోతాదులోనే వేయండి. యూరియాను ఒకేసారి కాకుండా 2-3 దఫాలుగా వేయండి. భాస్వరం మరియు పొటాష్‌ను ఆఖరి దుక్కిలో వేయడం మంచిది.",
+            4: "వర్షం పడే అవకాశం ఉన్నప్పుడు పురుగుమందులు లేదా ఎరువులు పిచికారీ చేయకూడదు. మందు కొట్టిన తర్వాత కనీసం 4-6 గంటల పాటు వర్షం పడకుండా ఉంటేనే మందు సమర్థవంతంగా పనిచేస్తుంది."
+        };
+
+        let currentActiveText = "నమస్కారం రైతు సోదరులారా! వ్యవసాయ సహాయం కోసం పైన ఉన్న ఏదైనా ప్రశ్నపై క్లిక్ చేయండి.";
+
+        function openSmartAssistModal() {
+            document.getElementById("smartAssistModal").classList.add("active");
+        }
+        function closeSmartAssistModal() {
+            document.getElementById("smartAssistModal").classList.remove("active");
+        }
+        function closeModalOnBg(e) {
+            if (e.target.id === "smartAssistModal") {
+                closeSmartAssistModal();
+            }
+        }
+        function showAnswer(id) {
+            const text = answers[id];
+            currentActiveText = text;
+            document.getElementById("smartAnswerBox").innerHTML = `<strong>సలహా:</strong><br>${text}`;
+        }
+        function speakCurrentAnswer() {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(currentActiveText);
+                utterance.lang = "te-IN"; // Telugu
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert("Voice synthesis is not supported on this browser.");
+            }
+        }
+    </script>
 </body>
 </html>
-
