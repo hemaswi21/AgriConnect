@@ -47,17 +47,18 @@
         .faq-pill {
             background: #f1f5f9;
             border: 1px solid #cbd5e1;
-            padding: 0.5rem 0.8rem;
+            padding: 0.6rem 0.9rem;
             border-radius: 8px;
-            font-size: 0.88rem;
+            font-size: 0.9rem;
             cursor: pointer;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.6rem;
             display: block;
             width: 100%;
             text-align: left;
             transition: all 0.2s;
+            font-weight: 500;
         }
-        .faq-pill:hover {
+        .faq-pill:hover, .faq-pill.active {
             background: var(--primary-light);
             border-color: var(--primary);
             color: var(--primary-dark);
@@ -65,11 +66,12 @@
         .answer-box {
             background: #f0fdf4;
             border-left: 4px solid var(--primary);
-            padding: 1rem;
+            padding: 1.1rem;
             border-radius: 8px;
             margin-top: 1rem;
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 0.96rem;
+            line-height: 1.6;
+            color: #14532d;
         }
     </style>
 </head>
@@ -194,34 +196,37 @@
             </div>
 
             <div style="margin-bottom: 1rem; display: flex; gap: 8px; flex-wrap: wrap;">
-                <button type="button" class="btn-primary" style="padding: 0.4rem 0.8rem; font-size: 0.85rem;" onclick="toggleLanguage(); closeSmartAssistModal();">
-                    🔄 భాష మార్చండి (Switch Telugu / English)
+                <button type="button" class="btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;" onclick="toggleLanguage(); closeSmartAssistModal();">
+                    🔄 భాష మార్చండి (Switch Language)
                 </button>
-                <button type="button" class="btn-preset" onclick="speakCurrentAnswer()">
+                <button type="button" id="voicePlayBtn" class="btn-preset" style="background: #dcfce7; border-color: #16a34a; color: #166534; font-weight: 600;" onclick="speakCurrentAnswer()">
                     🔊 చదివి వినిపించు (Voice Assist)
                 </button>
             </div>
 
-            <p style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.8rem;">సలహా కోసం ప్రశ్నపై క్లిక్ చేయండి:</p>
+            <p id="faqPrompt" style="font-size: 0.9rem; color: #64748b; margin-bottom: 0.8rem;">సలహా కోసం ప్రశ్నపై క్లిక్ చేయండి:</p>
 
-            <button class="faq-pill" onclick="showAnswer(1)">
+            <button class="faq-pill" onclick="showAnswer(1, this)">
                 🌾 వరిలో అగ్గితెగులు (Rice Blast) వస్తే ఏం చేయాలి?
             </button>
-            <button class="faq-pill" onclick="showAnswer(2)">
+            <button class="faq-pill" onclick="showAnswer(2, this)">
                 ☁️ ప్రత్తిలో అధిక దిగుబడి రావడానికి ఏం జాగ్రత్తలు తీసుకోవాలి?
             </button>
-            <button class="faq-pill" onclick="showAnswer(3)">
+            <button class="faq-pill" onclick="showAnswer(3, this)">
                 🧪 ఎరువులు వేసేటప్పుడు పాటించాల్సిన ముఖ్య నియమాలు ఏమిటి?
             </button>
-            <button class="faq-pill" onclick="showAnswer(4)">
+            <button class="faq-pill" onclick="showAnswer(4, this)">
                 🌦️ వర్షం పడే సూచన ఉన్నప్పుడు పిచికారీ చేయవచ్చా?
             </button>
 
             <div id="smartAnswerBox" class="answer-box">
-                నమస్కారం రైతు సోదరులారా! వ్యవసాయ సహాయం కోసం పైన ఉన్న ఏదైనా ప్రశ్నపై క్లిక్ చేయండి లేదా పైనున్న బటన్ ద్వారా భాషను మార్చుకోండి.
+                నమస్కారం రైతు సోదరులారా! వ్యవసాయ సహాయం కోసం పైన ఉన్న ఏదైనా ప్రశ్నపై క్లిక్ చేయండి.
             </div>
         </div>
     </div>
+
+    <!-- Hidden audio element for high-quality audio stream -->
+    <audio id="ttsAudio" style="display: none;"></audio>
 
     <!-- Footer -->
     <footer>
@@ -231,11 +236,18 @@
 
     <script src="/static/js/main.js"></script>
     <script>
-        const answers = {
-            1: "వరిలో అగ్గితెగులు (Rice Blast) నివారణకు ట్రైసైక్లాజోల్ (Beam) 0.6 గ్రా/లీటరు నీటిలో కలిపి పిచికారీ చేయండి. నత్రజని (Urea) ఎరువులను అధికంగా వేయవద్దు.",
-            2: "ప్రత్తిలో అధిక దిగుబడికి నేలలో నీటి నిల్వ లేకుండా చూసుకోండి. తెల్లదోమ నివారణకు పసుపు జిగురు అట్టలు అమర్చండి. పూత దశలో బోరాన్ మరియు పొటాషియం పిచికారీ చేయండి.",
-            3: "ఎరువులను సిఫార్సు చేసిన మోతాదులోనే వేయండి. యూరియాను ఒకేసారి కాకుండా 2-3 దఫాలుగా వేయండి. భాస్వరం మరియు పొటాష్‌ను ఆఖరి దుక్కిలో వేయడం మంచిది.",
-            4: "వర్షం పడే అవకాశం ఉన్నప్పుడు పురుగుమందులు లేదా ఎరువులు పిచికారీ చేయకూడదు. మందు కొట్టిన తర్వాత కనీసం 4-6 గంటల పాటు వర్షం పడకుండా ఉంటేనే మందు సమర్థవంతంగా పనిచేస్తుంది."
+        const answers_te = {
+            1: "వరిలో అగ్గితెగులు నివారణకు ట్రైసైక్లాజోల్ 0.6 గ్రాము లీటరు నీటిలో కలిపి పిచికారీ చేయండి. యూరియా ఎరువులను అధికంగా వేయవద్దు.",
+            2: "ప్రత్తిలో అధిక దిగుబడికి నేలలో నీటి నిల్వ లేకుండా చూసుకోండి. తెల్లదోమ నివారణకు పసుపు జిగురు అట్టలు అమర్చండి.",
+            3: "ఎరువులను సిఫార్సు చేసిన మోతాదులోనే వేయండి. యూరియాను ఒకేసారి కాకుండా రెండు మూడు దఫాలుగా వేయండి.",
+            4: "వర్షం పడే అవకాశం ఉన్నప్పుడు పురుగుమందులు పిచికారీ చేయకూడదు. పిచికారీ తర్వాత కనీసం నాలుగు గంటలు వర్షం పడకుండా ఉండాలి."
+        };
+
+        const answers_en = {
+            1: "For Rice Blast disease, spray Tricyclazole 75% WP @ 0.6 grams per liter of water. Avoid excess nitrogen fertilizer.",
+            2: "For high cotton yield, prevent water logging. Install yellow sticky traps for whitefly and spray boron during flowering.",
+            3: "Apply fertilizers strictly according to recommendation. Split urea application into two to three doses instead of all at once.",
+            4: "Do not spray pesticides or fertilizers if rain is forecast within 4 to 6 hours, as rain washes away the chemicals."
         };
 
         let currentActiveText = "నమస్కారం రైతు సోదరులారా! వ్యవసాయ సహాయం కోసం పైన ఉన్న ఏదైనా ప్రశ్నపై క్లిక్ చేయండి.";
@@ -245,25 +257,88 @@
         }
         function closeSmartAssistModal() {
             document.getElementById("smartAssistModal").classList.remove("active");
+            stopVoice();
         }
         function closeModalOnBg(e) {
             if (e.target.id === "smartAssistModal") {
                 closeSmartAssistModal();
             }
         }
-        function showAnswer(id) {
-            const text = answers[id];
+        function showAnswer(id, btnEl) {
+            document.querySelectorAll('.faq-pill').forEach(b => b.classList.remove('active'));
+            if (btnEl) btnEl.classList.add('active');
+
+            const isTe = currentLang === 'te';
+            const text = isTe ? answers_te[id] : answers_en[id];
             currentActiveText = text;
-            document.getElementById("smartAnswerBox").innerHTML = `<strong>సలహా:</strong><br>${text}`;
+            const prefix = isTe ? "<strong>సలహా:</strong><br>" : "<strong>Advisory:</strong><br>";
+            document.getElementById("smartAnswerBox").innerHTML = `${prefix}${text}`;
+            
+            // Auto speak on select
+            speakCurrentAnswer();
         }
-        function speakCurrentAnswer() {
+
+        function stopVoice() {
+            const audio = document.getElementById("ttsAudio");
+            if (audio) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(currentActiveText);
-                utterance.lang = "te-IN";
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
+                window.speechSynthesis.cancel();
+            }
+            const btn = document.getElementById("voicePlayBtn");
+            if (btn) btn.innerHTML = "🔊 చదివి వినిపించు (Voice Assist)";
+        }
+
+        function speakCurrentAnswer() {
+            stopVoice();
+            const btn = document.getElementById("voicePlayBtn");
+            if (btn) btn.innerHTML = "⏹️ ఆపండి (Stop Voice)";
+
+            const isTe = currentLang === 'te';
+            const langCode = isTe ? 'te' : 'en';
+
+            // High-fidelity natural voice streaming via online TTS
+            const cleanText = currentActiveText.replace(/<[^>]*>?/gm, '').trim();
+            const encodedText = encodeURIComponent(cleanText.substring(0, 190));
+            const streamUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${encodedText}`;
+
+            const audio = document.getElementById("ttsAudio");
+            audio.src = streamUrl;
+
+            const playPromise = audio.play();
+            if (playPromise !== undefined) {
+                playPromise.then(() => {
+                    audio.onended = () => {
+                        if (btn) btn.innerHTML = "🔊 చదివి వినిపించు (Voice Assist)";
+                    };
+                }).catch(err => {
+                    // Fallback to Web Speech API if streaming blocked
+                    fallbackSpeechSynthesis(cleanText, isTe);
+                });
             } else {
-                alert("Voice synthesis is not supported on this browser.");
+                fallbackSpeechSynthesis(cleanText, isTe);
+            }
+        }
+
+        function fallbackSpeechSynthesis(text, isTe) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = isTe ? "te-IN" : "en-US";
+                utterance.rate = 0.85;
+
+                const voices = window.speechSynthesis.getVoices();
+                if (isTe) {
+                    const teVoice = voices.find(v => v.lang.startsWith('te') || v.name.toLowerCase().includes('telugu') || v.lang.startsWith('hi'));
+                    if (teVoice) utterance.voice = teVoice;
+                }
+
+                utterance.onend = () => {
+                    const btn = document.getElementById("voicePlayBtn");
+                    if (btn) btn.innerHTML = "🔊 చదివి వినిపించు (Voice Assist)";
+                };
+                window.speechSynthesis.speak(utterance);
             }
         }
     </script>
