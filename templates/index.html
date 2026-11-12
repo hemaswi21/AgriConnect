@@ -225,9 +225,6 @@
         </div>
     </div>
 
-    <!-- Hidden audio element for high-quality audio stream -->
-    <audio id="ttsAudio" style="display: none;"></audio>
-
     <!-- Footer -->
     <footer>
         <p data-i18n="footer_rights">&copy; 2026 AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ. సర్వహక్కులు ప్రత్యేకించబడ్డాయి.</p>
@@ -243,6 +240,13 @@
             4: "వర్షం పడే అవకాశం ఉన్నప్పుడు పురుగుమందులు పిచికారీ చేయకూడదు. పిచికారీ తర్వాత కనీసం నాలుగు గంటలు వర్షం పడకుండా ఉండాలి."
         };
 
+        const answers_te_phonetic = {
+            1: "Varilo aggithegulu nivaaranaku, Tricyclazole 0.6 grams leetaru neetilo kalipi spray cheyandi. Urea eruvulanu adhikaamga veyavaddu.",
+            2: "Pratthilo adhika digubadiki, nelalo neeti nilva lekunda chusukondi. Telladhoma nivaaranaku pasupu jigurattalu amarchandi.",
+            3: "Eruvulanu sifarashu chesina mothadhulone veyandi. Urea nu okesari kakunda rendu moodu dafaaluga veyandi.",
+            4: "Varsham pade avakasam unnappudu purugula mandhulu spray cheyakoodadhu. Spray chesaka kaneesam naalugu gantalu varsham padakunda undali."
+        };
+
         const answers_en = {
             1: "For Rice Blast disease, spray Tricyclazole 75% WP @ 0.6 grams per liter of water. Avoid excess nitrogen fertilizer.",
             2: "For high cotton yield, prevent water logging. Install yellow sticky traps for whitefly and spray boron during flowering.",
@@ -251,6 +255,7 @@
         };
 
         let currentActiveText = "నమస్కారం రైతు సోదరులారా! వ్యవసాయ సహాయం కోసం పైన ఉన్న ఏదైనా ప్రశ్నపై క్లిక్ చేయండి.";
+        let currentActivePhonetic = "Namaskaram raitu sodharulaara! Vyavasaaya sahaayam kosam paina unna edhaina prashnapai click cheyandi.";
 
         function openSmartAssistModal() {
             document.getElementById("smartAssistModal").classList.add("active");
@@ -271,19 +276,14 @@
             const isTe = currentLang === 'te';
             const text = isTe ? answers_te[id] : answers_en[id];
             currentActiveText = text;
+            currentActivePhonetic = isTe ? answers_te_phonetic[id] : answers_en[id];
             const prefix = isTe ? "<strong>సలహా:</strong><br>" : "<strong>Advisory:</strong><br>";
             document.getElementById("smartAnswerBox").innerHTML = `${prefix}${text}`;
             
-            // Auto speak on select
             speakCurrentAnswer();
         }
 
         function stopVoice() {
-            const audio = document.getElementById("ttsAudio");
-            if (audio) {
-                audio.pause();
-                audio.currentTime = 0;
-            }
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
             }
@@ -297,47 +297,42 @@
             if (btn) btn.innerHTML = "⏹️ ఆపండి (Stop Voice)";
 
             const isTe = currentLang === 'te';
-            const langCode = isTe ? 'te' : 'en';
 
-            // High-fidelity natural voice streaming via online TTS
-            const cleanText = currentActiveText.replace(/<[^>]*>?/gm, '').trim();
-            const encodedText = encodeURIComponent(cleanText.substring(0, 190));
-            const streamUrl = `https://translate.google.com/translate_tts?ie=UTF-8&tl=${langCode}&client=tw-ob&q=${encodedText}`;
-
-            const audio = document.getElementById("ttsAudio");
-            audio.src = streamUrl;
-
-            const playPromise = audio.play();
-            if (playPromise !== undefined) {
-                playPromise.then(() => {
-                    audio.onended = () => {
-                        if (btn) btn.innerHTML = "🔊 చదివి వినిపించు (Voice Assist)";
-                    };
-                }).catch(err => {
-                    // Fallback to Web Speech API if streaming blocked
-                    fallbackSpeechSynthesis(cleanText, isTe);
-                });
-            } else {
-                fallbackSpeechSynthesis(cleanText, isTe);
-            }
-        }
-
-        function fallbackSpeechSynthesis(text, isTe) {
             if ('speechSynthesis' in window) {
-                const utterance = new SpeechSynthesisUtterance(text);
-                utterance.lang = isTe ? "te-IN" : "en-US";
-                utterance.rate = 0.85;
-
                 const voices = window.speechSynthesis.getVoices();
+                // Check if device has an actual Telugu voice
+                const teVoice = voices.find(v => v.lang.startsWith('te') || v.name.toLowerCase().includes('telugu'));
+                
+                let textToSpeak = "";
+                let langToUse = "en-IN";
+
                 if (isTe) {
-                    const teVoice = voices.find(v => v.lang.startsWith('te') || v.name.toLowerCase().includes('telugu') || v.lang.startsWith('hi'));
-                    if (teVoice) utterance.voice = teVoice;
+                    if (teVoice) {
+                        textToSpeak = currentActiveText;
+                        langToUse = teVoice.lang;
+                    } else {
+                        // Laptop has no Telugu voice installed.
+                        // Use phonetic Telugu so laptop speaks the full Telugu sentence audibly!
+                        textToSpeak = currentActivePhonetic || currentActiveText;
+                        langToUse = "en-IN";
+                    }
+                } else {
+                    textToSpeak = currentActiveText;
+                    langToUse = "en-US";
                 }
 
+                const utterance = new SpeechSynthesisUtterance(textToSpeak);
+                if (teVoice) utterance.voice = teVoice;
+                utterance.lang = langToUse;
+                utterance.rate = 0.85;
+
                 utterance.onend = () => {
-                    const btn = document.getElementById("voicePlayBtn");
                     if (btn) btn.innerHTML = "🔊 చదివి వినిపించు (Voice Assist)";
                 };
+                utterance.onerror = () => {
+                    if (btn) btn.innerHTML = "🔊 చదివి వినిపించు (Voice Assist)";
+                };
+
                 window.speechSynthesis.speak(utterance);
             }
         }
