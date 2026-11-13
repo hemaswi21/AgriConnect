@@ -170,7 +170,17 @@ function applyPreset(crop) {
         "rice": { n: 80, p: 48, k: 40, temp: 24, hum: 82, ph: 6.5, rain: 230 },
         "cotton": { n: 118, p: 46, k: 20, temp: 25, hum: 80, ph: 6.9, rain: 80 },
         "maize": { n: 78, p: 48, k: 20, temp: 23, hum: 65, ph: 6.2, rain: 85 },
-        "chickpea": { n: 40, p: 68, k: 80, temp: 19, hum: 17, ph: 7.3, rain: 80 }
+        "chickpea": { n: 40, p: 68, k: 80, temp: 19, hum: 17, ph: 7.3, rain: 80 },
+        "chilli": { n: 120, p: 60, k: 25, temp: 28, hum: 65, ph: 6.5, rain: 95 },
+        "pigeonpea": { n: 21, p: 68, k: 20, temp: 28, hum: 48, ph: 5.8, rain: 150 },
+        "groundnut": { n: 23, p: 28, k: 20, temp: 28, hum: 55, ph: 6.2, rain: 65 },
+        "banana": { n: 100, p: 82, k: 50, temp: 27, hum: 80, ph: 5.9, rain: 105 },
+        "mango": { n: 20, p: 27, k: 30, temp: 31, hum: 50, ph: 5.8, rain: 95 },
+        "blackgram": { n: 40, p: 68, k: 19, temp: 30, hum: 65, ph: 7.1, rain: 68 },
+        "watermelon": { n: 99, p: 17, k: 50, temp: 26, hum: 85, ph: 6.5, rain: 51 },
+        "sugarcane": { n: 80, p: 50, k: 50, temp: 30, hum: 82, ph: 6.5, rain: 180 },
+        "coconut": { n: 22, p: 17, k: 30, temp: 27, hum: 95, ph: 6.0, rain: 176 },
+        "coffee": { n: 101, p: 29, k: 30, temp: 26, hum: 59, ph: 6.8, rain: 158 }
     };
     const data = presets[crop];
     if (data) {

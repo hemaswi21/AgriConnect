@@ -60,7 +60,13 @@ CROP_DATA = {
     "Jute": {"telugu": "జనపనార (Jute)", "stats": [78, 10, 47, 6, 40, 5, 24.9, 2.0, 79.6, 4.0, 6.7, 0.4, 174.8, 20.0],
              "season": "Kharif", "water_req": "High", "soil_type": "Alluvial / Clay Loam", "icon": "🌾"},
     "Coffee": {"telugu": "కాఫీ (Coffee)", "stats": [101, 12, 29, 5, 30, 4, 25.5, 2.0, 58.9, 5.0, 6.8, 0.4, 158.1, 20.0],
-               "season": "Perennial", "water_req": "High", "soil_type": "Rich volcanic / Loamy", "icon": "☕"}
+               "season": "Perennial", "water_req": "High", "soil_type": "Rich volcanic / Loamy", "icon": "☕"},
+    "Chilli": {"telugu": "మిర్చి (Chilli)", "stats": [120, 12, 60, 8, 25, 4, 28.0, 2.5, 65.0, 5.0, 6.5, 0.4, 95.0, 15.0],
+               "season": "Kharif / Rabi", "water_req": "Moderate", "soil_type": "Black / Red Loamy soil", "icon": "🌶️"},
+    "Groundnut": {"telugu": "వేరుశనగ (Groundnut)", "stats": [23, 5, 28, 5, 20, 3, 27.5, 2.5, 55.0, 5.0, 6.2, 0.4, 65.0, 12.0],
+                   "season": "Kharif / Rabi", "water_req": "Low-Moderate", "soil_type": "Sandy Loam / Red soil", "icon": "🥜"},
+    "Sugarcane": {"telugu": "చెరకు (Sugarcane)", "stats": [80, 10, 50, 7, 50, 5, 30.0, 2.5, 82.0, 4.0, 6.5, 0.4, 180.0, 25.0],
+                   "season": "All Season (12-18 months)", "water_req": "Very High", "soil_type": "Deep Loamy / Black soil", "icon": "🪴"}
 }
 
 def predict_crop(n, p, k, temp, hum, ph, rain):
