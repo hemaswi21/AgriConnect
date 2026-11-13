@@ -99,45 +99,45 @@
 
     <div class="login-card">
         <div class="login-logo">🌾</div>
-        <h1 class="login-title" id="loginHeader">రైతు స్వాగతం</h1>
-        <p class="login-sub" id="loginDesc">AgriConnect లోకి ప్రవేశించడానికి మీ వివరాలను తెలపండి</p>
+        <h1 class="login-title" id="loginHeader" data-i18n="login_title">రైతు స్వాగతం</h1>
+        <p class="login-sub" id="loginDesc" data-i18n="login_sub">AgriConnect లోకి ప్రవేశించడానికి మీ వివరాలను తెలపండి</p>
 
         <form class="login-form" onsubmit="handleFarmerLogin(event)">
             <div class="form-group">
-                <label for="farmerName" id="lblFarmerName" style="font-weight: 600; color: #1e293b;">
-                    👤 రైతు పేరు (Farmer Name):
+                <label for="farmerName" id="lblFarmerName" data-i18n="login_name_label" style="font-weight: 600; color: #1e293b;">
+                    👤 రైతు పేరు:
                 </label>
-                <input type="text" id="farmerName" class="form-control" placeholder="ఉదా: రామయ్య (Ramaiah)" required>
+                <input type="text" id="farmerName" class="form-control" data-i18n-placeholder="login_name_placeholder" placeholder="ఉదా: రామయ్య" required>
             </div>
 
             <div class="form-group">
-                <label for="farmerMobile" id="lblFarmerMobile" style="font-weight: 600; color: #1e293b;">
-                    📱 మొబైల్ నంబర్ (Mobile Number):
+                <label for="farmerMobile" id="lblFarmerMobile" data-i18n="login_mobile_label" style="font-weight: 600; color: #1e293b;">
+                    📱 మొబైల్ నంబర్:
                 </label>
-                <input type="tel" id="farmerMobile" class="form-control" placeholder="ఉదా: 9876543210" pattern="[0-9]{10}" required>
+                <input type="tel" id="farmerMobile" class="form-control" data-i18n-placeholder="login_mobile_placeholder" placeholder="10 అంకెల నంబర్ (ఉదా: 9876543210)" pattern="[0-9]{10}" required>
             </div>
 
             <div class="form-group">
-                <label for="farmerVillage" id="lblFarmerVillage" style="font-weight: 600; color: #1e293b;">
-                    📍 గ్రామం / జిల్లా (Village / District):
+                <label for="farmerVillage" id="lblFarmerVillage" data-i18n="login_village_label" style="font-weight: 600; color: #1e293b;">
+                    📍 గ్రామం / జిల్లా:
                 </label>
-                <input type="text" id="farmerVillage" class="form-control" placeholder="ఉదా: వరంగల్ (Warangal)" required>
+                <input type="text" id="farmerVillage" class="form-control" data-i18n-placeholder="login_village_placeholder" placeholder="ఉదా: వరంగల్" required>
             </div>
 
-            <button type="submit" class="login-btn" id="btnLogin">
-                🌾 ప్రవేశించండి (Login to AgriConnect)
+            <button type="submit" class="login-btn" id="btnLogin" data-i18n="login_btn_submit">
+                🌾 ప్రవేశించండి
             </button>
         </form>
 
         <div style="margin: 1.2rem 0; display: flex; align-items: center; gap: 8px;">
             <div style="flex: 1; height: 1px; background: #cbd5e1;"></div>
-            <span style="font-size: 0.85rem; color: #64748b; font-weight: 600;">లేదా (OR)</span>
+            <span style="font-size: 0.85rem; color: #64748b; font-weight: 600;" data-i18n="login_or">లేదా</span>
             <div style="flex: 1; height: 1px; background: #cbd5e1;"></div>
         </div>
 
         <!-- 1-Click Easy Access for Grandfather -->
-        <button type="button" class="easy-btn" onclick="handleGrandfatherLogin()">
-            ⚡ తాతయ్య గారి సులభ ప్రవేశం (1-Click Easy Login)
+        <button type="button" class="easy-btn" onclick="handleGrandfatherLogin()" data-i18n="login_grandfather_btn">
+            ⚡ తాతయ్య గారి సులభ ప్రవేశం (1-క్లిక్)
         </button>
     </div>
 
@@ -163,25 +163,13 @@
 
         function handleGrandfatherLogin() {
             // Direct 1-click access for grandfather
-            const farmer = { name: "తాతయ్య (Grandfather)", mobile: "9876543210", village: "స్వంత గ్రామం" };
+            const isTe = currentLang === 'te';
+            const grandfatherName = isTe ? "రామయ్య తాతయ్య" : "Grandfather Ramaiah";
+            const villageName = isTe ? "స్వంత గ్రామం" : "Home Village";
+            const farmer = { name: grandfatherName, mobile: "9876543210", village: villageName };
             localStorage.setItem("agri_farmer", JSON.stringify(farmer));
             window.location.href = "/";
         }
-
-        // Apply translations on load
-        function updateLoginLang() {
-            const isTe = currentLang === 'te';
-            document.getElementById("loginHeader").textContent = isTe ? "రైతు స్వాగతం" : "Farmer Welcome & Login";
-            document.getElementById("loginDesc").textContent = isTe ? "AgriConnect లోకి ప్రవేశించడానికి మీ వివరాలను తెలపండి" : "Enter your simple details to access AgriConnect";
-            document.getElementById("lblFarmerName").textContent = isTe ? "👤 రైతు పేరు (Farmer Name):" : "👤 Farmer Name:";
-            document.getElementById("lblFarmerMobile").textContent = isTe ? "📱 మొబైల్ నంబర్ (Mobile Number):" : "📱 Mobile Number:";
-            document.getElementById("lblFarmerVillage").textContent = isTe ? "📍 గ్రామం / జిల్లా (Village / District):" : "📍 Village / District:";
-            document.getElementById("btnLogin").textContent = isTe ? "🌾 ప్రవేశించండి (Login to AgriConnect)" : "🌾 Enter AgriConnect";
-        }
-
-        document.addEventListener("DOMContentLoaded", () => {
-            updateLoginLang();
-        });
     </script>
 </body>
 </html>

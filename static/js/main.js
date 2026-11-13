@@ -50,6 +50,19 @@ const translations = {
         "btn_diagnose": "తెగులును గుర్తించండి",
         "btn_calculate": "ఎరువుల మోతాదును లెక్కించండి",
 
+        // Login Page
+        "login_title": "రైతు స్వాగతం",
+        "login_sub": "AgriConnect లోకి ప్రవేశించడానికి మీ వివరాలను తెలపండి",
+        "login_name_label": "👤 రైతు పేరు:",
+        "login_name_placeholder": "ఉదా: రామయ్య",
+        "login_mobile_label": "📱 మొబైల్ నంబర్:",
+        "login_mobile_placeholder": "10 అంకెల నంబర్ (ఉదా: 9876543210)",
+        "login_village_label": "📍 గ్రామం / జిల్లా:",
+        "login_village_placeholder": "ఉదా: వరంగల్",
+        "login_btn_submit": "🌾 ప్రవేశించండి",
+        "login_or": "లేదా",
+        "login_grandfather_btn": "⚡ తాతయ్య గారి సులభ ప్రవేశం (1-క్లిక్)",
+
         // Footer
         "footer_rights": "© 2026 AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ. సర్వహక్కులు ప్రత్యేకించబడ్డాయి.",
         "footer_sub": "రైతుల కోసం రూపొందించబడింది • మెషిన్ లెర్నింగ్ & డీప్ లెర్నింగ్ ఆధారితం"
@@ -102,6 +115,19 @@ const translations = {
         "btn_diagnose": "Scan & Diagnose",
         "btn_calculate": "Calculate Dosage",
 
+        // Login Page
+        "login_title": "Farmer Login",
+        "login_sub": "Enter your details to enter AgriConnect",
+        "login_name_label": "👤 Farmer Name:",
+        "login_name_placeholder": "e.g. Ramaiah",
+        "login_mobile_label": "📱 Mobile Number:",
+        "login_mobile_placeholder": "10-digit mobile number (e.g. 9876543210)",
+        "login_village_label": "📍 Village / District:",
+        "login_village_placeholder": "e.g. Warangal",
+        "login_btn_submit": "🌾 Enter AgriConnect",
+        "login_or": "OR",
+        "login_grandfather_btn": "⚡ Grandfather Easy 1-Click Entry",
+
         // Footer
         "footer_rights": "© 2026 AgriConnect: AI-Based Agriculture Support System. All Rights Reserved.",
         "footer_sub": "Designed for Farmers • Machine Learning & Deep Learning Powered"
@@ -115,15 +141,25 @@ function toggleLanguage() {
 }
 
 function applyLanguage() {
-    const t = translations[currentLang];
+    const t = translations[currentLang] || translations["te"];
+    if (!t) return;
+
     document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (t[key]) {
             el.textContent = t[key];
         }
     });
+
+    document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
+        const key = el.getAttribute("data-i18n-placeholder");
+        if (t[key]) {
+            el.setAttribute("placeholder", t[key]);
+        }
+    });
+
     const langBtn = document.getElementById("langToggleBtn");
-    if (langBtn) {
+    if (langBtn && t["btn_switch_lang"]) {
         langBtn.textContent = t["btn_switch_lang"];
     }
 }
@@ -397,7 +433,8 @@ function logoutFarmer() {
     window.location.href = "/login";
 }
 
-// Auto check auth on load
+// Auto check auth & apply saved language on load
 document.addEventListener("DOMContentLoaded", () => {
+    applyLanguage();
     checkFarmerAuth();
 });
