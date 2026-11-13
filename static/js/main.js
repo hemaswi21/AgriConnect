@@ -61,7 +61,7 @@ const translations = {
         "login_village_placeholder": "ఉదా: వరంగల్",
         "login_btn_submit": "🌾 ప్రవేశించండి",
         "login_or": "లేదా",
-        "login_grandfather_btn": "⚡ తాతయ్య గారి సులభ ప్రవేశం (1-క్లిక్)",
+        "login_grandfather_btn": "⚡ సులభ ప్రవేశం (1-క్లిక్ డైరెక్ట్ ఎంట్రీ)",
 
         // Footer
         "footer_rights": "© 2026 AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ. సర్వహక్కులు ప్రత్యేకించబడ్డాయి.",
@@ -126,7 +126,7 @@ const translations = {
         "login_village_placeholder": "e.g. Warangal",
         "login_btn_submit": "🌾 Enter AgriConnect",
         "login_or": "OR",
-        "login_grandfather_btn": "⚡ Grandfather Easy 1-Click Entry",
+        "login_grandfather_btn": "⚡ Quick Access (1-Click Direct Entry)",
 
         // Footer
         "footer_rights": "© 2026 AgriConnect: AI-Based Agriculture Support System. All Rights Reserved.",

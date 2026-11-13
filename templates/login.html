@@ -135,9 +135,9 @@
             <div style="flex: 1; height: 1px; background: #cbd5e1;"></div>
         </div>
 
-        <!-- 1-Click Easy Access for Grandfather -->
+        <!-- 1-Click Quick Access (No typing needed) -->
         <button type="button" class="easy-btn" onclick="handleGrandfatherLogin()" data-i18n="login_grandfather_btn">
-            ⚡ తాతయ్య గారి సులభ ప్రవేశం (1-క్లిక్)
+            ⚡ సులభ ప్రవేశం (1-క్లిక్ డైరెక్ట్ ఎంట్రీ)
         </button>
     </div>
 
@@ -162,11 +162,11 @@
         }
 
         function handleGrandfatherLogin() {
-            // Direct 1-click access for grandfather
+            // Direct 1-click quick access
             const isTe = currentLang === 'te';
-            const grandfatherName = isTe ? "రామయ్య తాతయ్య" : "Grandfather Ramaiah";
-            const villageName = isTe ? "స్వంత గ్రామం" : "Home Village";
-            const farmer = { name: grandfatherName, mobile: "9876543210", village: villageName };
+            const farmerName = isTe ? "రైతు మిత్రుడు" : "Farmer Friend";
+            const villageName = isTe ? "వరంగల్" : "Warangal";
+            const farmer = { name: farmerName, mobile: "9876543210", village: villageName };
             localStorage.setItem("agri_farmer", JSON.stringify(farmer));
             window.location.href = "/";
         }
