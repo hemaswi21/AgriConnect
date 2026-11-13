@@ -335,3 +335,69 @@ function previewLeafImage(input) {
 document.addEventListener("DOMContentLoaded", () => {
     applyLanguage();
 });
+
+
+// Farmer Login & Session Management
+function checkFarmerAuth() {
+    const path = window.location.pathname;
+    const isLoginPage = path === "/login" || path.endsWith("/login") || path.endsWith("/login.html");
+    const farmerData = localStorage.getItem("agri_farmer");
+
+    if (!farmerData && !isLoginPage) {
+        window.location.href = "/login";
+        return;
+    }
+
+    if (farmerData && !isLoginPage) {
+        try {
+            const farmer = JSON.parse(farmerData);
+            renderFarmerWelcomeBadge(farmer);
+        } catch(e) {}
+    }
+}
+
+function renderFarmerWelcomeBadge(farmer) {
+    const navLinks = document.querySelector(".nav-links");
+    if (!navLinks) return;
+
+    let badge = document.getElementById("farmerWelcomeBadge");
+    if (!badge) {
+        const li = document.createElement("li");
+        badge = document.createElement("div");
+        badge.id = "farmerWelcomeBadge";
+        badge.style.display = "flex";
+        badge.style.alignItems = "center";
+        badge.style.gap = "8px";
+        badge.style.background = "rgba(255, 255, 255, 0.25)";
+        badge.style.padding = "0.3rem 0.8rem";
+        badge.style.borderRadius = "20px";
+        badge.style.fontSize = "0.9rem";
+        badge.style.color = "#ffffff";
+        badge.style.fontWeight = "600";
+        badge.style.whiteSpace = "nowrap";
+
+        li.appendChild(badge);
+        const langBtn = document.getElementById("langToggleBtn");
+        if (langBtn && langBtn.closest("li")) {
+            navLinks.insertBefore(li, langBtn.closest("li"));
+        } else {
+            navLinks.appendChild(li);
+        }
+    }
+
+    const isTe = currentLang === 'te';
+    const welcomeWord = isTe ? `🌾 నమస్కారం, ${farmer.name} గారు!` : `🌾 Welcome, ${farmer.name}!`;
+    const logoutWord = isTe ? "మార్చండి" : "Switch";
+
+    badge.innerHTML = `<span>${welcomeWord}</span> <button type="button" onclick="logoutFarmer()" style="background: rgba(0,0,0,0.3); border: none; color: #fef08a; padding: 2px 8px; border-radius: 12px; font-size: 0.78rem; cursor: pointer; font-weight: 600;">${logoutWord}</button>`;
+}
+
+function logoutFarmer() {
+    localStorage.removeItem("agri_farmer");
+    window.location.href = "/login";
+}
+
+// Auto check auth on load
+document.addEventListener("DOMContentLoaded", () => {
+    checkFarmerAuth();
+});

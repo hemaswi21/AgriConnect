@@ -44,6 +44,10 @@ if FLASK_AVAILABLE:
     def market_page():
         return render_template("market.html")
 
+    @app.route("/login")
+    def login_page():
+        return render_template("login.html")
+
     @app.route("/fertilizer")
     def fertilizer_page():
         return render_template("fertilizer.html")
@@ -153,6 +157,7 @@ else:
             # HTML Pages
             routes = {
                 "/": "index.html",
+                "/login": "login.html",
                 "/crop": "crop.html",
                 "/disease": "disease.html",
                 "/weather": "weather.html",

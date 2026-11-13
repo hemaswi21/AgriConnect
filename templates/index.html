@@ -1,5 +1,7 @@
+h
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,16 +12,21 @@
         .modal-overlay {
             display: none;
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.6);
             z-index: 1000;
             align-items: center;
             justify-content: center;
             padding: 1rem;
         }
+
         .modal-overlay.active {
             display: flex;
         }
+
         .modal-card {
             background: white;
             border-radius: 16px;
@@ -31,6 +38,7 @@
             max-height: 90vh;
             overflow-y: auto;
         }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -39,6 +47,7 @@
             padding-bottom: 0.8rem;
             margin-bottom: 1rem;
         }
+
         .close-btn {
             background: none;
             border: none;
@@ -46,6 +55,7 @@
             cursor: pointer;
             color: #64748b;
         }
+
         .faq-pill {
             background: #f1f5f9;
             border: 1px solid #cbd5e1;
@@ -60,11 +70,14 @@
             transition: all 0.2s;
             font-weight: 500;
         }
-        .faq-pill:hover, .faq-pill.active {
+
+        .faq-pill:hover,
+        .faq-pill.active {
             background: var(--primary-light);
             border-color: var(--primary);
             color: var(--primary-dark);
         }
+
         .answer-box {
             background: #f0fdf4;
             border-left: 4px solid var(--primary);
@@ -77,6 +90,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Navbar -->
     <nav class="navbar">
@@ -92,7 +106,8 @@
                 <li><a href="/weather" data-i18n="nav_weather">వాతావరణం</a></li>
                 <li><a href="/market" data-i18n="nav_market">మార్కెట్ ధరలు</a></li>
                 <li><a href="/fertilizer" data-i18n="nav_fertilizer">ఎరువుల సూచన</a></li>
-                <li><button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">Switch to English</button></li>
+                <li><button class="lang-btn" id="langToggleBtn" onclick="toggleLanguage()">Switch to English</button>
+                </li>
             </ul>
         </div>
     </nav>
@@ -102,7 +117,8 @@
         <!-- Hero -->
         <section class="hero">
             <h1 data-i18n="hero_title">AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ</h1>
-            <p data-i18n="hero_sub">నేల స్వభావం ఆధారంగా పంటల సిఫార్సు, ఆకు తెగుళ్ల గుర్తింపు, లైవ్ మార్కెట్ ధరలు మరియు వ్యవసాయ వాతావరణ హెచ్చరికలు ఒకే చోట.</p>
+            <p data-i18n="hero_sub">నేల స్వభావం ఆధారంగా పంటల సిఫార్సు, ఆకు తెగుళ్ల గుర్తింపు, లైవ్ మార్కెట్ ధరలు మరియు
+                వ్యవసాయ వాతావరణ హెచ్చరికలు ఒకే చోట.</p>
             <div class="hero-stats">
                 <div class="stat-item">
                     <div class="stat-num">22+</div>
@@ -130,7 +146,9 @@
                 <div>
                     <span class="card-icon">🌱</span>
                     <h3 class="card-title" data-i18n="card1_title">పంట సిఫార్సు</h3>
-                    <p class="card-desc" data-i18n="card1_desc">నేలలోని నత్రజని, భాస్వరం, పొటాషియం (N-P-K), pH, ఉష్ణోగ్రత మరియు వర్షపాతం ఆధారంగా అత్యధిక దిగుబడినిచ్చే పంటను మెషిన్ లెర్నింగ్ మోడల్స్ సిఫార్సు చేస్తాయి.</p>
+                    <p class="card-desc" data-i18n="card1_desc">నేలలోని నత్రజని, భాస్వరం, పొటాషియం (N-P-K), pH,
+                        ఉష్ణోగ్రత మరియు వర్షపాతం ఆధారంగా అత్యధిక దిగుబడినిచ్చే పంటను మెషిన్ లెర్నింగ్ మోడల్స్ సిఫార్సు
+                        చేస్తాయి.</p>
                 </div>
                 <span class="card-link" data-i18n="card1_link">నేలను విశ్లేషించి పంటను తెలుసుకోండి &rarr;</span>
             </a>
@@ -140,7 +158,8 @@
                 <div>
                     <span class="card-icon">🍃</span>
                     <h3 class="card-title" data-i18n="card2_title">మొక్కల తెగుళ్ల గుర్తింపు</h3>
-                    <p class="card-desc" data-i18n="card2_desc">తెగులు సోకిన ఆకు ఫోటోను అప్‌లోడ్ చేయండి. డీప్ లెర్నింగ్ CNN మోడల్ తెగులును గుర్తించి, సేంద్రీయ మరియు రసాయన నివారణ మందులను వెంటనే సూచిస్తుంది.</p>
+                    <p class="card-desc" data-i18n="card2_desc">తెగులు సోకిన ఆకు ఫోటోను అప్‌లోడ్ చేయండి. డీప్ లెర్నింగ్
+                        CNN మోడల్ తెగులును గుర్తించి, సేంద్రీయ మరియు రసాయన నివారణ మందులను వెంటనే సూచిస్తుంది.</p>
                 </div>
                 <span class="card-link" data-i18n="card2_link">ఆకు ఫోటోను స్కాన్ చేయండి &rarr;</span>
             </a>
@@ -150,7 +169,8 @@
                 <div>
                     <span class="card-icon">🌦️</span>
                     <h3 class="card-title" data-i18n="card3_title">వాతావరణం & వ్యవసాయ హెచ్చరికలు</h3>
-                    <p class="card-desc" data-i18n="card3_desc">నిజ సమయ వ్యవసాయ-వాతావరణ సూచనలు. వర్షపాతం, ఎండ తీవ్రత మరియు పురుగుమందులు పిచికారీ చేయడానికి సరైన సమయాలపై తక్షణ హెచ్చరికలు.</p>
+                    <p class="card-desc" data-i18n="card3_desc">నిజ సమయ వ్యవసాయ-వాతావరణ సూచనలు. వర్షపాతం, ఎండ తీవ్రత
+                        మరియు పురుగుమందులు పిచికారీ చేయడానికి సరైన సమయాలపై తక్షణ హెచ్చరికలు.</p>
                 </div>
                 <span class="card-link" data-i18n="card3_link">వాతావరణ సమాచారాన్ని చూడండి &rarr;</span>
             </a>
@@ -160,7 +180,8 @@
                 <div>
                     <span class="card-icon">💰</span>
                     <h3 class="card-title" data-i18n="card4_title">మార్కెట్ ధరల సమాచారం (మండి)</h3>
-                    <p class="card-desc" data-i18n="card4_desc">తెలంగాణ, ఆంధ్రప్రదేశ్ మరియు భారతదేశంలోని ప్రధాన వ్యవసాయ మార్కెట్ల ప్రస్తుత ధరలు (కనీస, గరిష్ట, సగటు ధరలు ₹/క్వింటాల్).</p>
+                    <p class="card-desc" data-i18n="card4_desc">తెలంగాణ, ఆంధ్రప్రదేశ్ మరియు భారతదేశంలోని ప్రధాన వ్యవసాయ
+                        మార్కెట్ల ప్రస్తుత ధరలు (కనీస, గరిష్ట, సగటు ధరలు ₹/క్వింటాల్).</p>
                 </div>
                 <span class="card-link" data-i18n="card4_link">మార్కెట్ ధరలను ట్రాక్ చేయండి &rarr;</span>
             </a>
@@ -170,19 +191,24 @@
                 <div>
                     <span class="card-icon">🧪</span>
                     <h3 class="card-title" data-i18n="card5_title">ఎరువుల మోతాదు కాలిక్యులేటర్</h3>
-                    <p class="card-desc" data-i18n="card5_desc">నేల పరీక్ష ఫలితాలు మరియు పంట అవసరాల ఆధారంగా ఎకరాకు కావలసిన యూరియా, డీఏపీ (DAP), పొటాష్ బస్తాల సంఖ్యను ఖచ్చితంగా లెక్కిస్తుంది.</p>
+                    <p class="card-desc" data-i18n="card5_desc">నేల పరీక్ష ఫలితాలు మరియు పంట అవసరాల ఆధారంగా ఎకరాకు
+                        కావలసిన యూరియా, డీఏపీ (DAP), పొటాష్ బస్తాల సంఖ్యను ఖచ్చితంగా లెక్కిస్తుంది.</p>
                 </div>
                 <span class="card-link" data-i18n="card5_link">ఎరువుల మోతాదును లెక్కించండి &rarr;</span>
             </a>
 
             <!-- Interactive Telugu Support & Smart Assist -->
-            <div class="feature-card" onclick="openSmartAssistModal()" style="cursor: pointer; background: linear-gradient(135deg, #f0fdf4, #e0f2fe); border-color: #86efac;">
+            <div class="feature-card" onclick="openSmartAssistModal()"
+                style="cursor: pointer; background: linear-gradient(135deg, #f0fdf4, #e0f2fe); border-color: #86efac;">
                 <div>
                     <span class="card-icon">🗣️</span>
-                    <h3 class="card-title" data-i18n="card6_title" style="color: #15803d;">తెలుగు సహాయం & స్మార్ట్ అసిస్టెంట్</h3>
-                    <p class="card-desc" data-i18n="card6_desc">రైతులకు ఉపయోగపడే స్మార్ట్ అసిస్టెంట్. వ్యవసాయ సలహాలు పొందడానికి, వాయిస్ అసిస్టెంట్ వినడానికి లేదా భాషను మార్చుకోవడానికి ఇక్కడ క్లిక్ చేయండి.</p>
+                    <h3 class="card-title" data-i18n="card6_title" style="color: #15803d;">తెలుగు సహాయం & స్మార్ట్
+                        అసిస్టెంట్</h3>
+                    <p class="card-desc" data-i18n="card6_desc">రైతులకు ఉపయోగపడే స్మార్ట్ అసిస్టెంట్. వ్యవసాయ సలహాలు
+                        పొందడానికి, వాయిస్ అసిస్టెంట్ వినడానికి లేదా భాషను మార్చుకోవడానికి ఇక్కడ క్లిక్ చేయండి.</p>
                 </div>
-                <span class="card-link" data-i18n="card6_link" style="color: #166534; font-weight: 700;">స్మార్ట్ అసిస్టెంట్‌ని తెరవండి &rarr;</span>
+                <span class="card-link" data-i18n="card6_link" style="color: #166534; font-weight: 700;">స్మార్ట్
+                    అసిస్టెంట్‌ని తెరవండి &rarr;</span>
             </div>
         </div>
     </main>
@@ -198,34 +224,46 @@
             </div>
 
             <div style="margin-bottom: 1rem; display: flex; gap: 8px; flex-wrap: wrap;">
-                <button type="button" class="btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;" onclick="toggleLanguage(); closeSmartAssistModal();">
+                <button type="button" class="btn-primary" style="padding: 0.45rem 0.9rem; font-size: 0.85rem;"
+                    onclick="toggleLanguage(); closeSmartAssistModal();">
                     🔄 భాష మార్చండి (Switch Language)
                 </button>
-                <button type="button" id="voicePlayBtn" class="btn-preset" style="background: #dcfce7; border-color: #16a34a; color: #166534; font-weight: 600;" onclick="speakCurrentAnswer()">
+                <button type="button" id="voicePlayBtn" class="btn-preset"
+                    style="background: #dcfce7; border-color: #16a34a; color: #166534; font-weight: 600;"
+                    onclick="speakCurrentAnswer()">
                     🔊 చదివి వినిపించు (Voice Assist)
                 </button>
             </div>
 
             <!-- Voice & Text Question Input Section -->
-            <div style="margin-bottom: 1.2rem; background: #f8fafc; padding: 1rem; border-radius: 12px; border: 1px solid #cbd5e1;">
+            <div
+                style="margin-bottom: 1.2rem; background: #f8fafc; padding: 1rem; border-radius: 12px; border: 1px solid #cbd5e1;">
                 <label style="font-weight: 600; font-size: 0.9rem; color: #1e293b; margin-bottom: 6px; display: block;">
                     🎙️ మీ ప్రశ్నను అడగండి (Type or Speak Voice):
                 </label>
                 <div style="display: flex; gap: 6px; align-items: center; flex-wrap: wrap;">
-                    <input type="text" id="userQueryInput" class="form-control" placeholder="ఉదా: మిర్చిలో తామర పురుగు నివారణ ఏమిటి?" style="font-size: 0.92rem; padding: 0.55rem 0.8rem; flex: 1; min-width: 180px;" onkeydown="if(event.key==='Enter') sendUserQuery()">
-                    <button type="button" id="micBtn" class="btn-preset" style="background: #fee2e2; border-color: #ef4444; color: #b91c1c; font-weight: 700; padding: 0.55rem 0.85rem;" onclick="toggleVoiceRecording()">
+                    <input type="text" id="userQueryInput" class="form-control"
+                        placeholder="ఉదా: మిర్చిలో తామర పురుగు నివారణ ఏమిటి?"
+                        style="font-size: 0.92rem; padding: 0.55rem 0.8rem; flex: 1; min-width: 180px;"
+                        onkeydown="if(event.key==='Enter') sendUserQuery()">
+                    <button type="button" id="micBtn" class="btn-preset"
+                        style="background: #fee2e2; border-color: #ef4444; color: #b91c1c; font-weight: 700; padding: 0.55rem 0.85rem;"
+                        onclick="toggleVoiceRecording()">
                         🎙️ మాట్లాడండి
                     </button>
-                    <button type="button" id="askBtn" class="btn-primary" style="padding: 0.55rem 1rem; font-size: 0.9rem;" onclick="sendUserQuery()">
+                    <button type="button" id="askBtn" class="btn-primary"
+                        style="padding: 0.55rem 1rem; font-size: 0.9rem;" onclick="sendUserQuery()">
                         అడగండి
                     </button>
                 </div>
-                <div id="micStatus" style="font-size: 0.85rem; color: #dc2626; margin-top: 6px; display: none; font-weight: 600;">
+                <div id="micStatus"
+                    style="font-size: 0.85rem; color: #dc2626; margin-top: 6px; display: none; font-weight: 600;">
                     🔴 మైక్రోఫోన్ ఆన్‌లో ఉంది... మీ మాటలను వింటున్నాము, మాట్లాడండి...
                 </div>
             </div>
 
-            <p id="faqPrompt" style="font-size: 0.88rem; color: #64748b; margin-bottom: 0.6rem;">సాధారణ ప్రశ్నలు (Quick FAQs):</p>
+            <p id="faqPrompt" style="font-size: 0.88rem; color: #64748b; margin-bottom: 0.6rem;">సాధారణ ప్రశ్నలు (Quick
+                FAQs):</p>
 
             <button class="faq-pill" onclick="showAnswer(1, this)">
                 🌾 వరిలో అగ్గితెగులు (Rice Blast) వస్తే ఏం చేయాలి?
@@ -241,15 +279,18 @@
             </button>
 
             <div id="smartAnswerBox" class="answer-box">
-                నమస్కారం రైతు సోదరులారా! పైన మైక్రోఫోన్ 🎙️ నొక్కి మీ సందేహాన్ని మాట్లాడవచ్చు లేదా ప్రశ్నను టైప్ చేసి అడగవచ్చు.
+                నమస్కారం రైతు సోదరులారా! పైన మైక్రోఫోన్ 🎙️ నొక్కి మీ సందేహాన్ని మాట్లాడవచ్చు లేదా ప్రశ్నను టైప్ చేసి
+                అడగవచ్చు.
             </div>
         </div>
     </div>
 
     <!-- Footer -->
     <footer>
-        <p data-i18n="footer_rights">&copy; 2026 AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ. సర్వహక్కులు ప్రత్యేకించబడ్డాయి.</p>
-        <p data-i18n="footer_sub" style="margin-top: 4px; font-size: 0.8rem; color: #64748b;">రైతుల కోసం రూపొందించబడింది • మెషిన్ లెర్నింగ్ & డీప్ లెర్నింగ్ ఆధారితం</p>
+        <p data-i18n="footer_rights">&copy; 2026 AgriConnect: AI ఆధారిత వ్యవసాయ మద్దతు వ్యవస్థ. సర్వహక్కులు
+            ప్రత్యేకించబడ్డాయి.</p>
+        <p data-i18n="footer_sub" style="margin-top: 4px; font-size: 0.8rem; color: #64748b;">రైతుల కోసం రూపొందించబడింది
+            • మెషిన్ లెర్నింగ్ & డీప్ లెర్నింగ్ ఆధారితం</p>
     </footer>
 
     <script src="/static/js/main.js"></script>
@@ -288,18 +329,18 @@
             recognition.continuous = false;
             recognition.interimResults = false;
 
-            recognition.onresult = function(event) {
+            recognition.onresult = function (event) {
                 const transcript = event.results[0][0].transcript;
                 document.getElementById("userQueryInput").value = transcript;
                 stopVoiceRecording();
                 sendUserQuery(); // Auto ask AI upon speech end!
             };
 
-            recognition.onerror = function(err) {
+            recognition.onerror = function (err) {
                 stopVoiceRecording();
             };
 
-            recognition.onend = function() {
+            recognition.onend = function () {
                 stopVoiceRecording();
             };
         }
@@ -326,7 +367,7 @@
                 micBtn.style.background = "#dc2626";
                 micBtn.style.color = "#ffffff";
                 micBtn.innerHTML = "⏹️ ఆపండి";
-            } catch(e) {
+            } catch (e) {
                 stopVoiceRecording();
             }
         }
@@ -334,7 +375,7 @@
         function stopVoiceRecording() {
             isRecording = false;
             if (recognition) {
-                try { recognition.stop(); } catch(e) {}
+                try { recognition.stop(); } catch (e) { }
             }
             document.getElementById("micStatus").style.display = "none";
             const micBtn = document.getElementById("micBtn");
@@ -372,7 +413,7 @@
 
                 // Auto speak answer
                 speakCurrentAnswer();
-            } catch(e) {
+            } catch (e) {
                 ansBox.innerHTML = currentLang === 'te' ? "సమాధానం పొందడంలో సమస్య వచ్చింది. మళ్ళీ ప్రయత్నించండి." : "Failed to get advice. Please try again.";
             }
         }
@@ -456,4 +497,5 @@
         }
     </script>
 </body>
+
 </html>
